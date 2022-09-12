@@ -7,7 +7,18 @@ module.exports = {
     "./src/layouts/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        amazone_blue: {
+          light: "#232f3e",
+          DEFAULT: "#131921",
+        },
+      },
+    },
   },
-  plugins: [],
+  darkMode: false,
+  plugins: [
+    require("@tailwindcss/line-clamp"),
+    require("tailwind-scrollbar")({ nocompatible: true }),
+  ],
 };
