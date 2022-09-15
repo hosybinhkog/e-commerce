@@ -1,16 +1,19 @@
-import Image from "next/image";
-import { useRouter } from "next/router";
 import {
+  MapIcon,
   MenuIcon,
   SearchIcon,
   ShoppingCartIcon,
-  MapIcon,
 } from "@heroicons/react/outline";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
 const Header: React.FC = () => {
   const router = useRouter();
+  const { data: session } = useSession();
+
   return (
     <header className='sticky top-0 z-50 left-0 right-0'>
       <div className='flex items-center bg-amazone_blue p-1 flex-grow py-2'>
@@ -43,11 +46,13 @@ const Header: React.FC = () => {
         </form>
 
         {/* RIGHT HEADER  */}
+
         <div className='text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap'>
           <div className='cursor-pointer link'>
-            <p>Hello Sỹ Bình</p>
+            <p>Hồ Sỹ Bình</p>
             <p className='font-extrabold md:text-sm'>Account & Lists</p>
           </div>
+
           <div className='cursor-pointer link'>
             <p>Returns</p>
             <p className='font-extrabold md:text-sm'>& Orders</p>

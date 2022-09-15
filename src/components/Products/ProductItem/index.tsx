@@ -9,7 +9,7 @@ const ProductItem: React.FC<ProductItemProps> = () => {
   // Math.floor(Math.random() * (MAX_RATING - MIN_RATING _1)) + MINRATING
   const [rating, setRating] = useState<number>(2);
   return (
-    <div className='relative flex flex-col m-5 bg-white rounded-sm z-30 p-10 rounded-md'>
+    <div className='relative flex flex-col m-5 bg-white  z-30 p-10 rounded-md'>
       <p className='absolute top-2 right-2 text-xs italic text-gray-400'>
         category
       </p>
