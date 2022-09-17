@@ -5,6 +5,7 @@ import { getToken } from "next-auth/jwt";
 // This function can be marked `async` if using `await` inside
 export const middleware = async (request: NextRequest) => {
   // If user is logged in, token will exist
+  console.log("MIDDLEWARE START");
   const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
@@ -20,15 +21,23 @@ export const middleware = async (request: NextRequest) => {
       return NextResponse.redirect(new URL("/", request.url));
     } else if (pathname === "/siginWithhGoole") {
       return NextResponse.redirect(new URL("/", request.url));
+    } else if (pathname === "/register") {
+      return NextResponse.redirect(new URL("/", request.url));
     }
 
     return NextResponse.next();
   }
 
   // Redirect to login if (1) user doesn't have a token AND (2) is requesting protected route
-  if (!token && pathname !== "/login" && pathname !== "/signinWithGoole") {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
+
+  // if (
+  //   !token &&
+  //   pathname !== "/login" &&
+  //   pathname !== "/register" &&
+  //   pathname !== "/signinWithGoole"
+  // ) {
+  //   return NextResponse.redirect(new URL("/login", request.url));
+  // }
 
   return NextResponse.next();
 };
