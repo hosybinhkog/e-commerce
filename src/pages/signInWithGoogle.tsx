@@ -10,7 +10,7 @@ interface signInWithGoogleProps {
 
 const signInWithGoogle: NextPage<signInWithGoogleProps> = ({ providers }) => {
   const { data: session } = useSession();
-  const { name, id } = providers.google;
+  const { name, id } = providers?.google;
   const router = useRouter();
 
   const handleLoginWithGoogle = () => signIn(id, { callbackUrl: "/" });
