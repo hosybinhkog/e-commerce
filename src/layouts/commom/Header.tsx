@@ -1,3 +1,5 @@
+import { useAppSelector } from "@/hooks";
+import { selectItems } from "@/redux/feature/cartSlice";
 import {
   MapIcon,
   MenuIcon,
@@ -13,6 +15,7 @@ import React from "react";
 const Header: React.FC = () => {
   const router = useRouter();
   const { data: session } = useSession();
+  const itemsCart = useAppSelector(selectItems);
 
   const handleClickLoginOrLogout = () => {
     if (session) {
@@ -73,7 +76,7 @@ const Header: React.FC = () => {
               <div className='relative'>
                 <ShoppingCartIcon className='h-10' />
                 <span className='absolute h-4 w-4 top-0 right-[0] px-2 py-1 text-xs  rounded-full bg-yellow-300 text-black font-extrabold flex items-center justify-center animate-pulse transition-all duration-150 ease-linear'>
-                  0
+                  {itemsCart.length}
                 </span>
               </div>
               <p className='font-extrabold md:text-sm hidden lg:flex mt-2 '>

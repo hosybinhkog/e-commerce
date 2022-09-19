@@ -5,7 +5,6 @@ import { getToken } from "next-auth/jwt";
 // This function can be marked `async` if using `await` inside
 export const middleware = async (request: NextRequest) => {
   // If user is logged in, token will exist
-  console.log("MIDDLEWARE START");
   const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,

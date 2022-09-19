@@ -11,7 +11,7 @@ const ProductItem: React.FC<ProductItemProps> = () => {
   const [rating, setRating] = useState<number>(2);
   const dispatch = useAppDispatch()
 
-  const handleAddToCart = async() => {
+  const handleAddToCart = () => {
     dispatch(addToCart("bbb"))
   }
 
@@ -51,7 +51,7 @@ const ProductItem: React.FC<ProductItemProps> = () => {
         <img className='w-12' src='https://links.papareact.com/fdw' alt='' />
         <p className='text-xs text-gray-500'>FREE Next-day Delivery</p>
       </div>
-      <button className='mt-auto btn'>Add to cart</button>
+      <button onClick={handleAddToCart} className='mt-auto btn'>Add to cart</button>
     </div>
   );
 };

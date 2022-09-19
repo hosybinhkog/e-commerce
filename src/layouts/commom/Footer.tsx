@@ -1,16 +1,38 @@
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 
 const Footer: React.FC = () => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   return (
     <footer className='max-w-[1920px]'>
       {/* FOOTER SCROLL TO TOP  */}
+      {!session && (
+        <div className='flex flex-col items-center justify-center py-[20px] mt-[20px] md:my-[40px] border-y border-gray-300 gap-3 text-xs'>
+          <span>See personalized recommendations</span>
+          <button
+            onClick={() => router.push("/login")}
+            className='btn w-[200px]'
+          >
+            Sign in
+          </button>
+          <p>
+            New customer?{" "}
+            <span
+              className='text-green-500 cursor-pointer'
+              onClick={() => router.push("/register")}
+            >
+              Start here
+            </span>
+          </p>
+        </div>
+      )}
       <div
         onClick={() => window.scrollTo(0, 0)}
-        className='w-full text-white text-md cursor-pointer text-center bg-[#37475a] h-[50px] flex items-center justify-center hover:bg-opacity-90'
+        className='w-full text-white text-md cursor-pointer text-center bg-[#37475a] h-[50px] flex items-center justify-center hover:bg-opacity-90 mt-[40px]'
       >
         Back to top
       </div>
