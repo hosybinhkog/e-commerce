@@ -74,6 +74,7 @@ const Cart: NextPage = () => {
                   </span>
                 </h2>
                 <button
+                  role={"link"}
                   disabled={!session}
                   className={`btn mt-2 ${
                     !session &&

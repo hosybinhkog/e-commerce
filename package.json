@@ -20,7 +20,8 @@
     "react-dom": "18.2.0",
     "react-redux": "^8.0.2",
     "react-transition-group": "^4.4.5",
-    "sass": "^1.54.9"
+    "sass": "^1.54.9",
+    "stripe": "^10.10.0"
   },
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.2",
@@ -29,6 +30,7 @@
     "@types/react": "18.0.18",
     "@types/react-dom": "18.0.6",
     "@types/react-transition-group": "^4.4.5",
+    "@types/stripe": "^8.0.417",
     "autoprefixer": "^10.4.8",
     "eslint": "8.23.0",
     "eslint-config-next": "12.3.0",
