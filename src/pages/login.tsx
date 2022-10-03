@@ -1,12 +1,18 @@
 import Input from "@/components/Input";
+import { useAppDispatch } from "@/hooks";
 import LayoutMain from "@/layouts/commom/LayoutMain";
 import { NextPage } from "next";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const login: NextPage = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   return (
     <LayoutMain bgWhite>

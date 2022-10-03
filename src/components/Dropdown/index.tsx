@@ -4,18 +4,20 @@ const clickOutsideRef = (
   content_ref: React.MutableRefObject<HTMLElement>,
   toggle_ref: React.MutableRefObject<HTMLElement>
 ) => {
-  document.addEventListener("mousedown", (e) => {
-    if (toggle_ref.current && toggle_ref.current.contains(e.target as Node)) {
-      content_ref.current.classList.toggle("active");
-    } else {
-      if (
-        content_ref.current &&
-        !content_ref.current.contains(e.target as Node)
-      ) {
-        content_ref.current.classList.remove("active");
+  if (typeof window !== "undefined") {
+    window.document.addEventListener("mousedown", (e) => {
+      if (toggle_ref.current && toggle_ref.current.contains(e.target as Node)) {
+        content_ref.current.classList.toggle("active");
+      } else {
+        if (
+          content_ref.current &&
+          !content_ref.current.contains(e.target as Node)
+        ) {
+          content_ref.current.classList.remove("active");
+        }
       }
-    }
-  });
+    });
+  }
 };
 
 const Dropdown: React.FC<any> = (props: any) => {

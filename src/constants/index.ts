@@ -20,47 +20,47 @@ export const passwordRegex =
 export const sidebarRoutes = [
   {
     display_name: "Dashboard",
-    route: "/",
+    route: "/dashboard",
     icon: HomeIcon,
   },
   {
     display_name: "Customers",
-    route: "/customers",
+    route: "/admin/customers",
     icon: UserGroupIcon,
   },
   {
-    display_name: "/admin/Posts",
-    router: "/posts",
+    display_name: "Posts",
+    router: "/admin/posts",
     icon: NewspaperIcon,
   },
   {
-    display_name: "/admin/Products",
-    route: "/products",
+    display_name: "Products",
+    route: "/admin/products",
     icon: QrcodeIcon,
   },
   {
-    display_name: "/admin/Orders",
-    route: "/orders",
+    display_name: "Orders",
+    route: "/admin/orders",
     icon: ShoppingCartIcon,
   },
   {
-    display_name: "/admin/categories",
-    route: "/categories",
+    display_name: "categories",
+    route: "/admin/categories",
     icon: ViewListIcon,
   },
   {
-    display_name: "/admin/discount",
-    route: "/discount",
+    display_name: "discount",
+    route: "/admin/discount",
     icon: GiftIcon,
   },
   {
-    display_name: "/admin/inventory",
-    route: "/inventory",
+    display_name: "inventory",
+    route: "/admin/inventory",
     icon: OfficeBuildingIcon,
   },
   {
-    display_name: "/admin/settings",
-    route: "/settings",
+    display_name: "settings",
+    route: "/admin/settings",
     icon: CogIcon,
   },
 ];

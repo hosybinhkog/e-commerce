@@ -21,7 +21,11 @@ yarn dev
 - userId: --> ref(user.id)
 - comments: commnentProducts[] -> ref(commentProduct.id)
 - price: number
--
+- categoryId:
+- Stock
+- rating
+- numOfReviews
+- reviews: { username, usser, comment, rating }
 - createdAt: Date
 - updatedAt: Date
 
@@ -34,8 +38,13 @@ yarn dev
 - usernameOrEmail: string
 - isGoogle: boolean
 - password: string ---> Hash Brypto or Argon2
-- phone: string || number || undefined
-- address: string || undefined
+- email: string
+- avatar : { public_id: string, url: string }
+- roles: string[]
+- phone: string
+- address: string
+- resetPassowdToken: string
+- resetPasswordExpire
 
 **Post**
 
@@ -99,11 +108,17 @@ yarn dev
 
 **Order**
 
-- product: Product[]
+- shippingInfo : { address, city, state, country, pinCode, phoneNo }
+- orderItems: { name, price, quantity, image, product }[]
 - id: String Or Number
-- createdAt: Date
-- updatedAt: Date
-- total
+- user: ObjectId
+- paymentInfo: { id, status }
+- paidAt: Date
+- itemsPrice: 0
+- taxPrice: Number
+- shippingPrice: Number
+- totalPrice: Number
+- orderStatus: string
 - createdAt: Date
 - updatedAt: Date
 

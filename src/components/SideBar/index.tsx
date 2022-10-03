@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 
 import { sidebarRoutes } from "@/constants";
@@ -19,9 +18,11 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 
   return (
     <div className='sidebar__item'>
-      <div className={`sidebar__item-inner ${activeItem}`}>
-        <Icon />
-        <span>{title}</span>
+      <div
+        className={`sidebar__item-inner items-center flex cursor-pointer ${activeItem}`}
+      >
+        <Icon className='h-8 w-8' />
+        <span className='font-bold text-lg '>{title}</span>
       </div>
     </div>
   );
@@ -35,7 +36,7 @@ const Sidebar: React.FC = () => {
   );
   return (
     <div className='sidebar'>
-      <div className='sidebar__logo'>
+      <div className='sidebar__logo' onClick={() => router.push("/dashboard")}>
         <img
           src='https://media.loveitopcdn.com/3807/logo-amazon-1.png'
           alt='Logo'
@@ -43,13 +44,13 @@ const Sidebar: React.FC = () => {
       </div>
       {sidebarRoutes.map((item, index) => {
         return (
-          <Link href={item.route} key={index}>
+          <div onClick={() => router.push(item.route)} key={index}>
             <SidebarItem
               title={item.display_name}
               icon={item.icon}
               active={index === activeItem}
             />
-          </Link>
+          </div>
         );
       })}
     </div>

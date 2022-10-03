@@ -1,5 +1,5 @@
 import { notifications, userMenu } from "@/constants";
-import { BellIcon } from "@heroicons/react/outline";
+import { BellIcon, SearchIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 import React from "react";
 import Dropdown from "../Dropdown";
@@ -26,7 +26,7 @@ const renderUserToggle = (user: userDisplay) => (
 
 const renderNotificationItem = (item, index) => (
   <div className='notification-item' key={index}>
-    <item.icon />
+    <item.icon className='h-5 w-5' />
     <span>{item.content}</span>
   </div>
 );
@@ -34,7 +34,7 @@ const renderNotificationItem = (item, index) => (
 const renderUserMenu = (item, index) => (
   <Link href='/' key={index}>
     <div className='notification-item'>
-      <item.icon />
+      <item.icon className='h-5 w-5' />
       <span>{item.content}</span>
     </div>
   </Link>
@@ -45,7 +45,7 @@ const TopNav: React.FC = () => {
     <div className='topnav'>
       <div className='topnav__search'>
         <input type='text' placeholder='Search here ...' />
-        <i className='bx bx-search'></i>
+        <SearchIcon className='h-5 w-5' />
       </div>
       <div className='topnav__right'>
         <div className='topnav__right-item'>
