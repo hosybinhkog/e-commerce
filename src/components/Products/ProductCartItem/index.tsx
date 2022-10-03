@@ -3,7 +3,7 @@ import { addToCart, removeCartItem } from "@/redux/feature/cartSlice";
 import { StarIcon } from "@heroicons/react/solid";
 import React from "react";
 import Currency from "react-currency-formatter";
-const ProductCartItem = () => {
+const ProductCartItem: React.FC = () => {
   const dispath = useAppDispatch();
 
   /// HARD
