@@ -36,7 +36,10 @@ const Sidebar: React.FC = () => {
   );
   return (
     <div className='sidebar'>
-      <div className='sidebar__logo' onClick={() => router.push("/dashboard")}>
+      <div
+        className='sidebar__logo visible cursor-pointer'
+        onClick={() => router.push("/dashboard")}
+      >
         <img
           src='https://media.loveitopcdn.com/3807/logo-amazon-1.png'
           alt='Logo'
