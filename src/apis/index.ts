@@ -4,6 +4,8 @@ const clientAxios = axios.create({
   baseURL: "https://localhost:5555/",
   headers: {
     "Content-Type": "application/json",
+    Accept: "application/json",
+    "access-control-allow-origin": "http://localhost:6969",
   },
   withCredentials: true,
 });
@@ -22,7 +24,7 @@ clientAxios.interceptors.request.use(
 // Add a response interceptor
 clientAxios.interceptors.response.use(
   function (response) {
-    return response.data;
+    return response;
   },
   function (error) {
     return Promise.reject(error);

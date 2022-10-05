@@ -1,21 +1,53 @@
-import { configureStore, ThunkAction ,Action ,combineReducers } from "@reduxjs/toolkit";
-import cartReducer from './feature/cartSlice'
+import {
+  legacy_createStore as createStore,
+  combineReducers,
+  applyMiddleware,
+} from "redux";
 
-const rootReducer = combineReducers({
-  cart: cartReducer
-})
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 
+import {
+  userReducer,
+  productReducerAll,
+  cartReducer,
+  orderReducer,
+  productReducer,
+} from "./reducers";
 
-export const store = configureStore({
-  reducer:rootReducer,
-  devTools: true
-})
+const initialState: any = {
+  cart: {
+    cartItems: localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cartItems"))
+      : [],
+    shippingInfo: localStorage.getItem("shippingInfo")
+      ? JSON.parse(localStorage.getItem("shippingInfo"))
+      : {},
+  },
+};
+
+const reducers = combineReducers({
+  products: productReducer,
+  productDetails: productReducerAll.productDetailsReducer,
+  user: userReducer.userReducer,
+  updateProfile: userReducer.profileReducer,
+  password: userReducer.forgotPasswordReducer,
+  cart: cartReducer.cartReducer,
+  newOrder: orderReducer.newOrderReducer,
+  myOrders: orderReducer.myOrdersReducer,
+  orderDetails: orderReducer.orderRetailsReducer,
+  newReview: productReducerAll.newReviewReducer,
+  product: productReducerAll.productReducerSingle,
+  updateOrderStatus: orderReducer.updateOrderStatus,
+});
+
+const middleware = [thunk];
+
+const store = createStore(
+  reducers,
+  initialState,
+  composeWithDevTools(applyMiddleware(...middleware))
+);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;

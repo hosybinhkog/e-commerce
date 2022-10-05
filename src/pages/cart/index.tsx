@@ -1,16 +1,14 @@
-import React from "react";
 import ProductCartItem from "@/components/Products/ProductCartItem";
-import { useAppSelector } from "@/hooks";
 import LayoutMain from "@/layouts/commom/LayoutMain";
-import { selectItems } from "@/redux/feature/cartSlice";
 import { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
+import React from "react";
 import Currency from "react-currency-formatter";
-import { useSession } from "next-auth/react";
 
 const Cart: NextPage = () => {
-  const itemsCart = useAppSelector(selectItems);
+  const itemsCart = [];
   const { data: session } = useSession();
   return (
     <div>
