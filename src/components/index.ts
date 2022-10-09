@@ -11,3 +11,4 @@ export { default as Table } from "./Table";
 export { default as Transition } from "./Transition";
 export { default as TopNav } from "./Topnav";
 export { default as Loading } from "./Loading";
+export { default as InputAdmin } from "./Admin/InputAdmin";

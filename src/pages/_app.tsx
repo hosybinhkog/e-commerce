@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   useEffect(() => {
     // @ts-ignore
     store.dispatch(loadUser());
-  }, []);
+  }, [store]);
   return (
     <ProtectRouter>
       <Transition location={router.pathname}>

@@ -27,7 +27,7 @@ import {
   UPDATE_PRODUCT_RESET,
 } from "@/constants/redux.contants";
 
-const productReducer = (state = { products: [] }, action) => {
+const productReducer = (state: any = { products: [] }, action) => {
   switch (action.type) {
     case ALL_PRODUCT_REQUESTS:
     case ADMIN_PRODUCT_REQUEST:
@@ -68,7 +68,7 @@ const productReducer = (state = { products: [] }, action) => {
 
 export default productReducer;
 
-export const productDetailsReducer = (state = { product: {} }, action) => {
+export const productDetailsReducer = (state: any = { product: {} }, action) => {
   switch (action.type) {
     case ALL_DETAIL_REQUESTS:
       return {

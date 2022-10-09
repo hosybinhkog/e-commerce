@@ -20,5 +20,6 @@ module.exports = {
   plugins: [
     require("@tailwindcss/line-clamp"),
     require("tailwind-scrollbar")({ nocompatible: true }),
+    require("@tailwindcss/forms"),
   ],
 };

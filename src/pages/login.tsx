@@ -21,13 +21,9 @@ const login: NextPage = () => {
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [notificationId, setNotificationsId] = useState<any>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleFormSubmitLogin = async (e) => {
-    const notification = toast.loading("Posting your comment");
-    setNotificationsId(notification);
-
     e.preventDefault();
     const id = toast.loading("Login...", { position: "top-center" });
     // @ts-ignore
@@ -39,7 +35,7 @@ const login: NextPage = () => {
     window.scrollTo(0, 0);
 
     if (error) {
-      toast.error(error, { id: notificationId });
+      toast.error(error);
       setErrorMessage(error);
       // @ts-ignore
       dispatch(clearErrors());
@@ -47,44 +43,41 @@ const login: NextPage = () => {
 
     if (isAuthenticated) {
       router.push("/");
-      toast.custom(
-        (t) => (
-          <div
-            className={`${
-              t.visible ? "animate-enter" : "animate-leave"
-            } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-          >
-            <div className='flex-1 w-0 p-4'>
-              <div className='flex items-start'>
-                <div className='flex-shrink-0 pt-0.5'>
-                  <img
-                    className='h-10 w-10 rounded-full'
-                    src={user.avatar.url}
-                    alt=''
-                  />
-                </div>
-                <div className='ml-3 flex-1'>
-                  <p className='text-sm font-medium text-gray-900'>
-                    {user.username}
-                  </p>
-                  <p className='mt-1 text-sm text-gray-500'>
-                    Hello friend! welcome to Amazone
-                  </p>
-                </div>
+      toast.custom((t) => (
+        <div
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+        >
+          <div className='flex-1 w-0 p-4'>
+            <div className='flex items-start'>
+              <div className='flex-shrink-0 pt-0.5'>
+                <img
+                  className='h-10 w-10 rounded-full'
+                  src={user.avatar.url}
+                  alt=''
+                />
+              </div>
+              <div className='ml-3 flex-1'>
+                <p className='text-sm font-medium text-gray-900'>
+                  {user.username}
+                </p>
+                <p className='mt-1 text-sm text-gray-500'>
+                  Hello friend! welcome to Amazone
+                </p>
               </div>
             </div>
-            <div className='flex border-l border-gray-200'>
-              <button
-                onClick={() => toast.dismiss(t.id)}
-                className='w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500'
-              >
-                Close
-              </button>
-            </div>
           </div>
-        ),
-        { id: notificationId, duration: 5000 }
-      );
+          <div className='flex border-l border-gray-200'>
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className='w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      ));
     }
   }, [dispatch, error, isAuthenticated, router]);
 

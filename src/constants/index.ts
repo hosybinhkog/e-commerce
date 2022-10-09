@@ -25,42 +25,42 @@ export const sidebarRoutes = [
   },
   {
     display_name: "Customers",
-    route: "/admin/customers",
+    route: "/dashboard/customers",
     icon: UserGroupIcon,
   },
   {
     display_name: "Posts",
-    router: "/admin/posts",
+    router: "/dashboard/posts",
     icon: NewspaperIcon,
   },
   {
     display_name: "Products",
-    route: "/admin/products",
+    route: "/dashboard/products",
     icon: QrcodeIcon,
   },
   {
     display_name: "Orders",
-    route: "/admin/orders",
+    route: "/dashboard/orders",
     icon: ShoppingCartIcon,
   },
   {
     display_name: "categories",
-    route: "/admin/categories",
+    route: "/dashboard/categories",
     icon: ViewListIcon,
   },
   {
     display_name: "discount",
-    route: "/admin/discount",
+    route: "/dashboard/discount",
     icon: GiftIcon,
   },
   {
     display_name: "inventory",
-    route: "/admin/inventory",
+    route: "/dashboard/inventory",
     icon: OfficeBuildingIcon,
   },
   {
     display_name: "settings",
-    route: "/admin/settings",
+    route: "/dashboard/settings",
     icon: CogIcon,
   },
 ];
