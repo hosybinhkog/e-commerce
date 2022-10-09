@@ -1,5 +1,4 @@
 import { useAppDispatch } from "@/hooks";
-import { addToCart } from "@/redux/feature/cartSlice";
 import { StarIcon } from "@heroicons/react/solid";
 import React, { useState } from "react";
 import Currency from "react-currency-formatter";
@@ -9,11 +8,9 @@ interface ProductItemProps {}
 const ProductItem: React.FC<ProductItemProps> = () => {
   // Math.floor(Math.random() * (MAX_RATING - MIN_RATING _1)) + MINRATING
   const [rating, setRating] = useState<number>(2);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
-  const handleAddToCart = () => {
-    dispatch(addToCart("bbb"))
-  }
+  const handleAddToCart = () => {};
 
   return (
     <div className='relative flex flex-col m-5 bg-white  z-30 p-10 rounded-md'>
@@ -51,7 +48,9 @@ const ProductItem: React.FC<ProductItemProps> = () => {
         <img className='w-12' src='https://links.papareact.com/fdw' alt='' />
         <p className='text-xs text-gray-500'>FREE Next-day Delivery</p>
       </div>
-      <button onClick={handleAddToCart} className='mt-auto btn'>Add to cart</button>
+      <button onClick={handleAddToCart} className='mt-auto btn'>
+        Add to cart
+      </button>
     </div>
   );
 };

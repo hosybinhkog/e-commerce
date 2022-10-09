@@ -2,42 +2,77 @@ import { Input } from "@/components";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import ProtectedRoute from "@/layouts/auth/ProtectedRoute";
 import LayoutMain from "@/layouts/commom/LayoutMain";
-import { forgotPassword } from "@/redux/actions/user.actions";
+import {
+  clearErrors,
+  loadUser,
+  resetPassword,
+} from "@/redux/actions/user.actions";
+import { validatePasswrodReset } from "@/utils/passwordConfirm";
 import { NextPage } from "next";
+import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const Forgotpassword: NextPage = () => {
+const ResetPassword: NextPage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const { error, message } = useAppSelector((state) => state.password);
+  const { error, success } = useAppSelector((state) => state.password);
 
-  const handleForgotPasswordSubmit = async (e) => {
+  const onBlur = () => setErrorMessage("");
+
+  console.log(router.query.token);
+
+  const handleResetPassword = (e) => {
     e.preventDefault();
-    const id = toast.loading("submiting....");
+    if (!validatePasswrodReset(password.toString(), passwordConfirm)) {
+      setErrorMessage(
+        "Password is includes one regex (8 - 16) and match confirm password"
+      );
+
+      toast.error(
+        "Password is includes one regex (8 - 16) and match confirm password"
+      );
+
+      return;
+    }
+
+    const id = toast.loading("Sumiting...");
+
+    const myForm = new FormData();
+    myForm.set("newPasssword", password);
+    myForm.set("confirmPassword", passwordConfirm);
     // @ts-ignore
-    await dispatch(forgotPassword(email));
+    dispatch(resetPassword(router.query.token, myForm));
     toast.remove(id);
   };
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
+    if (success) {
+      router.push("/");
+      toast.success("Change password succeess!!");
+      // @ts-ignore
+      dispatch(loadUser());
     }
 
-    if (message) {
-      toast.success("Success please check mail !!");
+    if (error) {
+      toast.error(error);
+      // @ts-ignore
+      dispatch(clearErrors());
     }
-  }, [error, toast, message]);
+  }, [dispatch, toast, error, success]);
 
   return (
     <ProtectedRoute>
       <LayoutMain bgWhite>
-        {" "}
+        <Head>
+          <title>Change password</title>
+        </Head>
         <div className='flex flex-col items-center border-b-[0.5px] border-b-gray-300 pb-[100px]'>
           <div
             onClick={() => router.push("/")}
@@ -54,20 +89,29 @@ const Forgotpassword: NextPage = () => {
           <div className='max-w-[350px] px-[20px] py-[20px] lg:px-[30px] lg:py-[40px] border-[0.5px] border-gray-400 bg-white w-full rounded-[2px]'>
             <form className='flex max-w-[800px] mx-auto flex-col gap-2'>
               <h4 className='font-semibold text-2xl text-gray-600'>
-                Forgot password
+                Reset password
               </h4>
               <Input
-                name='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type='email'
-                label='Email'
+                value={password}
+                name='password'
+                onBlur={onBlur}
+                label='New password'
+                type={"password"}
+                onChange={(e) => setPassword(e.target.value)}
               />
-
+              <Input
+                name='confirmPassword'
+                value={passwordConfirm}
+                onBlur={onBlur}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+                type={"password"}
+                label='Re-enter password'
+              />
+              <p className='text-xs text-red-300'>{errorMessage}</p>
               <button
                 className='btn text-center font-bold hover:scale-105 duration-150 transition-all ease-out mt-[30px]'
-                disabled={!email}
-                onClick={handleForgotPasswordSubmit}
+                disabled={!password || !passwordConfirm}
+                onClick={handleResetPassword}
               >
                 Submit
               </button>
@@ -100,4 +144,4 @@ const Forgotpassword: NextPage = () => {
   );
 };
 
-export default Forgotpassword;
+export default ResetPassword;

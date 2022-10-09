@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/hooks";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -7,10 +8,12 @@ const Footer: React.FC = () => {
   const router = useRouter();
   const { data: session } = useSession();
 
+  const { isAuthenticated } = useAppSelector((state) => state.user);
+
   return (
     <footer className='max-w-[1920px]'>
       {/* FOOTER SCROLL TO TOP  */}
-      {!session && (
+      {!session && !isAuthenticated && (
         <div className='flex flex-col items-center justify-center py-[20px] mt-[20px] md:my-[40px] border-y border-gray-300 gap-3 text-xs'>
           <span>See personalized recommendations</span>
           <button

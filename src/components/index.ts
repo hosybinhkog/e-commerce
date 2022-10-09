@@ -10,3 +10,4 @@ export { default as StatusCard } from "./StatusCard";
 export { default as Table } from "./Table";
 export { default as Transition } from "./Transition";
 export { default as TopNav } from "./Topnav";
+export { default as Loading } from "./Loading";

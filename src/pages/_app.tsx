@@ -7,7 +7,10 @@ import "../styles/app.scss";
 import { NextComponentType } from "next";
 import { Session } from "next-auth";
 import { Provider } from "react-redux";
-import { store } from "@/redux/store";
+import store from "@/redux/store";
+import { Toaster } from "react-hot-toast";
+import { useEffect } from "react";
+import { loadUser } from "@/redux/actions/user.actions";
 
 export interface CustomAppProps extends AppProps {
   Component: NextComponentType & { auth?: boolean; session?: Session };
@@ -15,11 +18,16 @@ export interface CustomAppProps extends AppProps {
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
+  useEffect(() => {
+    // @ts-ignore
+    store.dispatch(loadUser());
+  }, []);
   return (
     <ProtectRouter>
       <Transition location={router.pathname}>
         <Provider store={store}>
           <SessionProvider session={session}>
+            <Toaster />
             <Component {...pageProps} />
           </SessionProvider>
         </Provider>

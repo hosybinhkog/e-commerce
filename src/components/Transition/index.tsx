@@ -9,7 +9,7 @@ interface TransitonProps {
   location: string;
 }
 
-const TIMEOUT = 500;
+const TIMEOUT = 400;
 
 const getTransitionStyles = {
   entering: {

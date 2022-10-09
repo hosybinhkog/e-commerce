@@ -1,27 +1,37 @@
-import { useAppSelector } from "@/hooks";
-import { selectItems } from "@/redux/feature/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { logout } from "@/redux/actions/user.actions";
 import {
   MapIcon,
   MenuIcon,
   SearchIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/outline";
-import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import toast from "react-hot-toast";
 
 const Header: React.FC = () => {
   const router = useRouter();
-  const { data: session } = useSession();
-  const itemsCart = useAppSelector(selectItems);
+  // const { data: session } = useSession();
+  const { isAuthenticated, user } = useAppSelector((state) => state.user);
+  const { cartItems } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
 
   const handleClickLoginOrLogout = () => {
-    if (session) {
-      signOut();
+    if (isAuthenticated) {
+      router.push("/user/profile");
     } else {
       router.push("/login");
+    }
+  };
+
+  const handleLickLogout = () => {
+    if (isAuthenticated) {
+      // @ts-ignore
+      dispatch(logout());
+      toast.success("Loggin success fully!!", { duration: 1500 });
     }
   };
 
@@ -59,12 +69,14 @@ const Header: React.FC = () => {
         {/* RIGHT HEADER  */}
 
         <div className='text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap'>
-          <div
-            onClick={handleClickLoginOrLogout}
-            className='cursor-pointer link'
-          >
-            <p>{session ? `Hello ${session.user.name}` : "Sign in"}</p>
-            <p className='font-extrabold md:text-sm'>Account & Lists</p>
+          <div className='cursor-pointer link'>
+            {/* <p>{session ? `Hello ${session.user.name}` : "Sign in"}</p> */}
+            <p onClick={handleClickLoginOrLogout}>
+              {isAuthenticated ? `Hello ${user.username}` : "Sign in"}
+            </p>
+            <p onClick={handleLickLogout} className='font-extrabold md:text-sm'>
+              {isAuthenticated ? "Logout Here" : "Account & Lists"}
+            </p>
           </div>
 
           <div className='cursor-pointer link'>
@@ -76,7 +88,7 @@ const Header: React.FC = () => {
               <div className='relative'>
                 <ShoppingCartIcon className='h-10' />
                 <span className='absolute h-4 w-4 top-0 right-[0] px-2 py-1 text-xs  rounded-full bg-yellow-300 text-black font-extrabold flex items-center justify-center animate-pulse transition-all duration-150 ease-linear'>
-                  {itemsCart.length}
+                  {cartItems.length}
                 </span>
               </div>
               <p className='font-extrabold md:text-sm hidden lg:flex mt-2 '>

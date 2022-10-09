@@ -27,7 +27,7 @@ import {
   RESET_PASSWORD_FAILURE,
 } from "@/constants/redux.contants";
 
-export const userReducer = (state = { user: {} }, action) => {
+export const userReducer = (state: any = { user: {} }, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
     case REGISTER_USER_REQUEST:
@@ -123,14 +123,19 @@ export const profileReducer = (state = { user: {} }, action) => {
   }
 };
 
-export const forgotPasswordReducer = (state = {}, action) => {
+export const forgotPasswordReducer = (state: any = {}, action) => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST:
     case RESET_PASSWORD_REQUEST:
       return { ...state, loading: true, error: null };
     case FORGOT_PASSWORD_SUCCESS:
     case RESET_PASSWORD_SUCCESS:
-      return { ...state, loading: false, message: action.payload };
+      return {
+        ...state,
+        loading: false,
+        message: action.payload,
+        success: true,
+      };
     case FORGOT_PASSWORD_FAILURE:
     case RESET_PASSWORD_FAILURE:
       return { ...state, loading: false, error: action.payload };

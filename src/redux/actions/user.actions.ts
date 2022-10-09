@@ -26,13 +26,26 @@ import {
   RESET_PASSWORD_FAILURE,
 } from "@/constants/redux.contants";
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (email: string, password: string) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
-    const { data } = await clientAxios.post(`/api/v1/user/login`, {
-      email,
-      password,
-    });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "access-control-allow-origin": "http://localhost:6969",
+      },
+      withCredentials: true,
+    };
+    const { data } = await clientAxios.post(
+      `/api/v1/user/login`,
+      {
+        email,
+        password,
+      },
+      config
+    );
 
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
   } catch (error) {
@@ -69,6 +82,7 @@ export const loadUser = () => async (dispatch) => {
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
+    dispatch({ type: CLEAR_ERRORS });
   }
 };
 
@@ -119,11 +133,9 @@ export const forgotPassword = (email) => async (dispatch) => {
   try {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
 
-    const { data } = await clientAxios.post(
-      `/api/v1/user/change-password`,
-      email
-    );
-
+    const { data } = await clientAxios.post(`api/v1/user/change-password`, {
+      email,
+    });
     dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload: data.message });
   } catch (error) {
     dispatch({

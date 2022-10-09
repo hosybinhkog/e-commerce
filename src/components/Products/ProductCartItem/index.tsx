@@ -1,5 +1,4 @@
 import { useAppDispatch } from "@/hooks";
-import { addToCart, removeCartItem } from "@/redux/feature/cartSlice";
 import { StarIcon } from "@heroicons/react/solid";
 import React from "react";
 import Currency from "react-currency-formatter";
@@ -7,13 +6,9 @@ const ProductCartItem: React.FC = () => {
   const dispath = useAppDispatch();
 
   /// HARD
-  const handleAddToCart = () => {
-    dispath(addToCart("bbb"));
-  };
+  const handleAddToCart = () => {};
 
-  const handleRemoveItemToCart = () => {
-    dispath(removeCartItem(1));
-  };
+  const handleRemoveItemToCart = () => {};
 
   return (
     <div className='md:grid md:grid-cols-5 flex flex-col items-center md:items-start border-b border-gray-200'>
