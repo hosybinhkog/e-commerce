@@ -2,7 +2,7 @@ import React from "react";
 
 interface InputAdminProps {
   as?: string;
-  value?: string;
+  value?: string | number | readonly string[];
   label: string;
   name: string;
   type?: string;
@@ -11,6 +11,7 @@ interface InputAdminProps {
   onBlur?: () => void;
   row?: number;
   dataSelect?: any;
+  multible?: true;
 }
 
 const InputAdmin: React.FC<InputAdminProps> = ({
@@ -24,6 +25,7 @@ const InputAdmin: React.FC<InputAdminProps> = ({
   type = "text",
   row = 4,
   dataSelect,
+  multible = false,
 }) => {
   if (as === "textarea") {
     return (
@@ -48,7 +50,7 @@ const InputAdmin: React.FC<InputAdminProps> = ({
     );
   }
 
-  if ((type = "file")) {
+  if (type === "file") {
     return (
       <>
         <label
@@ -60,7 +62,11 @@ const InputAdmin: React.FC<InputAdminProps> = ({
         <input
           className=' block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer '
           id='file_input'
+          multiple={multible}
           type='file'
+          accept='images/'
+          onChange={onChange}
+          onBlur={onBlur}
         />
       </>
     );
@@ -77,14 +83,16 @@ const InputAdmin: React.FC<InputAdminProps> = ({
         </label>
         <select
           id='countries'
+          value={value}
+          onChange={onChange}
           className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '
         >
-          <option selected>Choose a country</option>
-          {dataSelect.map((data) => {
-            <option key={data.id} value={data.id}>
+          <option>Choose a {label}</option>
+          {dataSelect.map((data) => (
+            <option key={data.name} value={data._id}>
               {data.name}
-            </option>;
-          })}
+            </option>
+          ))}
         </select>
       </>
     );

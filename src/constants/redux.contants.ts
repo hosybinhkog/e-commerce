@@ -102,3 +102,12 @@ export const DELETE_ORDER_FAILURE = "delete_order_failure";
 export const UPDATE_STATUS_REQUEST = "update_status";
 export const UPDATE_STATUS_SUCCESS = "update_status_success";
 export const UPDATE_STATUS_FAILURE = "update_status_failure";
+
+export const NEW_CATEGORY_REQUEST = "new_CATEGORY_request";
+export const NEW_CATEGORY_SUCCESS = "new_CATEGORY_success";
+export const NEW_CATEGORY_RESET = "new_CATEGORY_reset";
+export const NEW_CATEGORY_FAIL = "new_CATEGORY_fail";
+
+export const ALL_CATEGORY_REQUESTS = "all_CATEGORYs_requests";
+export const ALL_CATEGORY_SUCCESS = "all_CATEGORYs_success";
+export const ALL_CATEGORY_FAILURE = "all_CATEGORYs_failure";

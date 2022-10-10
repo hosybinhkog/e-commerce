@@ -1,30 +1,27 @@
 import clientAxios from "@/apis";
 import {
-  ALL_PRODUCT_FAILURE,
-  ALL_PRODUCT_SUCCESS,
-  ALL_PRODUCT_REQUESTS,
-  CLEAR_ERRORS,
+  ADMIN_PRODUCT_FAIL,
+  ADMIN_PRODUCT_REQUEST,
+  ADMIN_PRODUCT_SUCCESS,
   ALL_DETAIL_FAILURE,
   ALL_DETAIL_REQUESTS,
   ALL_DETAIL_SUCCESS,
-  NEW_REVIEW_REQUEST,
-  NEW_REVIEW_SUCCESS,
-  NEW_REVIEW_FAIL,
-  ADMIN_PRODUCT_REQUEST,
-  ADMIN_PRODUCT_FAIL,
-  ADMIN_PRODUCT_SUCCESS,
+  ALL_PRODUCT_FAILURE,
+  ALL_PRODUCT_REQUESTS,
+  ALL_PRODUCT_SUCCESS,
+  CLEAR_ERRORS,
+  DELETE_PRODUCT_FAIL,
+  DELETE_PRODUCT_REQUEST,
+  DELETE_PRODUCT_SUCCESS,
+  NEW_PRODUCT_FAIL,
   NEW_PRODUCT_REQUEST,
   NEW_PRODUCT_SUCCESS,
-  NEW_PRODUCT_FAIL,
-  DELETE_PRODUCT_SUCCESS,
-  DELETE_PRODUCT_REQUEST,
-  DELETE_PRODUCT_FAIL,
+  NEW_REVIEW_FAIL,
+  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
   UPDATE_PRODUCT_FAIL,
   UPDATE_PRODUCT_REQUEST,
   UPDATE_PRODUCT_SUCCESS,
-  ALL_PRODUCTRESELL_REQUESTS,
-  ALL_PRODUCTRESELL_SUCCESS,
-  ALL_PRODUCTRESELL_FAILURE,
 } from "@/constants/redux.contants";
 
 export const getProduct =
@@ -54,33 +51,6 @@ export const getProduct =
       });
     }
   };
-
-export const getProductResell = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: ALL_PRODUCTRESELL_REQUESTS,
-    });
-
-    let url = `api/v1/product/resell`;
-
-    const config = {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    };
-
-    const { data } = await clientAxios.get(url, config);
-
-    dispatch({
-      type: ALL_PRODUCTRESELL_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ALL_PRODUCTRESELL_FAILURE,
-      payload: error.response.data.message,
-    });
-  }
-};
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });

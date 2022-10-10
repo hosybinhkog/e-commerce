@@ -62,6 +62,15 @@ const Profile: NextPage = () => {
                   src='https://images-na.ssl-images-amazon.com/images/G/01/x-locale/cs/help/images/gateway/self-service/fshub/11_lists._CB654640573_.png'
                   title='Your List'
                 />
+
+                {user?.role === "admin" && (
+                  <AccountCard
+                    description='Admin page'
+                    href='/dashboard'
+                    src='https://m.media-amazon.com/images/G/01/x-locale/cs/contact-us/GiftCard_icon_01._CB660349069_.png'
+                    title='Dashboard for admin'
+                  />
+                )}
               </div>
             </div>
           </LayoutMain>

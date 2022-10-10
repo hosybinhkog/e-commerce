@@ -13,6 +13,7 @@ import {
   cartReducer,
   orderReducer,
   productReducer,
+  categoryReducer,
 } from "./reducers";
 
 const initialState: any = {
@@ -43,6 +44,9 @@ const reducers = combineReducers({
   newReview: productReducerAll.newReviewReducer,
   product: productReducerAll.productReducerSingle,
   updateOrderStatus: orderReducer.updateOrderStatus,
+  createCategory: categoryReducer.createCategoryReducer,
+  categories: categoryReducer.getAllCategory,
+  newProduct: productReducerAll.newProductReducer,
 });
 
 const middleware = [thunk];

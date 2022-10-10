@@ -30,22 +30,22 @@ export const sidebarRoutes = [
   },
   {
     display_name: "Posts",
-    router: "/dashboard/posts",
+    route: "/dashboard/posts",
     icon: NewspaperIcon,
   },
   {
     display_name: "Products",
-    route: "/dashboard/products",
+    route: "/dashboard/product",
     icon: QrcodeIcon,
   },
   {
     display_name: "Orders",
-    route: "/dashboard/orders",
+    route: "/dashboard/order",
     icon: ShoppingCartIcon,
   },
   {
     display_name: "categories",
-    route: "/dashboard/categories",
+    route: "/dashboard/category",
     icon: ViewListIcon,
   },
   {
