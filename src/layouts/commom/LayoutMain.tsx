@@ -7,9 +7,14 @@ import Header from "./Header";
 interface LayoutMainProps {
   children: ReactNode;
   bgWhite?: boolean;
+  wFull?: boolean;
 }
 
-const LayoutMain: NextPage<LayoutMainProps> = ({ children, bgWhite }) => {
+const LayoutMain: NextPage<LayoutMainProps> = ({
+  children,
+  bgWhite,
+  wFull,
+}) => {
   return (
     <React.Fragment>
       <Head>
@@ -21,7 +26,11 @@ const LayoutMain: NextPage<LayoutMainProps> = ({ children, bgWhite }) => {
         }`}
       >
         <Header />
-        <main className={`min-h-screen max-w-screen-2xl mx-auto `}>
+        <main
+          className={`min-h-screen  mx-auto ${
+            wFull ? "w-full" : "max-w-screen-2xl"
+          }`}
+        >
           {children}
         </main>
         <Footer />

@@ -59,8 +59,12 @@ export const clearErrors = () => async (dispatch) => {
 export const getDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: ALL_DETAIL_REQUESTS });
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
 
-    const { data } = await clientAxios.get(`api/v1/product/${id}`);
+    const { data } = await clientAxios.get(`api/v1/product/${id}`, config);
 
     dispatch({
       type: ALL_DETAIL_SUCCESS,

@@ -17,3 +17,34 @@ export interface ExtendedSession extends Session {
 export enum TokenError {
   RefreshAccessTokenError = "RefreshAccessTokenError",
 }
+
+export interface Product {
+  _id: string;
+  imgs: Imgs[];
+  category: string;
+  description: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  Stock: number;
+  numOfReviews?: number;
+  price: number;
+  reviews: any[];
+  rating: number;
+}
+
+export interface Imgs {
+  public_id: string;
+  url: string;
+}
+
+export interface Category {
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  shortDescription: string;
+  name: string;
+  img: Imgs;
+  user: string;
+  description: string;
+}

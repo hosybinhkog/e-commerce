@@ -24,19 +24,19 @@ const Profile: NextPage = () => {
                 <div className='flex flex-col gap-3'>
                   <h5 className='border bg-gray-300 font-semibold text-xl tracking-wider  py-[2rem] rounded-md px-4'>
                     <span className='font-bold'>Username: </span>{" "}
-                    {user.username}
+                    {user?.username}
                   </h5>
                   <h5 className='border bg-gray-300 font-semibold text-xl tracking-wider  py-[2rem] rounded-md px-4'>
-                    <span className='font-bold'>Email: </span> {user.email}
+                    <span className='font-bold'>Email: </span> {user?.email}
                   </h5>
                   <h5 className='border bg-gray-300 font-semibold text-xl tracking-wider  py-[2rem] rounded-md px-4'>
                     <span className='font-bold'>Created at: </span>{" "}
-                    {moment(user.createdAt).format("MMMM Do YYYY")}
+                    {moment(user?.createdAt).format("MMMM Do YYYY")}
                   </h5>
                   <h5 className='border bg-gray-300 font-semibold text-xl tracking-wider  py-[2rem] rounded-md px-4 flex gap-2 items-center'>
                     <p>Avatar</p>
                     <img
-                      src={user.avatar?.url}
+                      src={user?.avatar?.url}
                       className='w-[150px] h-[150px] object-cover rounded-full'
                       alt=''
                     />

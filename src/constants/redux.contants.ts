@@ -10,6 +10,10 @@ export const ALL_DETAIL_REQUESTS = "all_details_requests";
 export const ALL_DETAIL_SUCCESS = "all_details_success";
 export const ALL_DETAIL_FAILURE = "all_details_failure";
 
+export const CATEGORY_DETAIL_REQUESTS = "CATEGORY_details_requests";
+export const CATEGORY_DETAIL_SUCCESS = "CATEGORY_details_success";
+export const CATEGORY_DETAIL_FAILURE = "CATEGORY_details_failure";
+
 export const CLEAR_ERRORS = "clear_errors";
 
 export const LOGIN_REQUEST = "login_request";
@@ -111,3 +115,8 @@ export const NEW_CATEGORY_FAIL = "new_CATEGORY_fail";
 export const ALL_CATEGORY_REQUESTS = "all_CATEGORYs_requests";
 export const ALL_CATEGORY_SUCCESS = "all_CATEGORYs_success";
 export const ALL_CATEGORY_FAILURE = "all_CATEGORYs_failure";
+
+export const UPDATE_CATEGORY_REQUEST = "update_CATEGORY_request";
+export const UPDATE_CATEGORY_SUCCESS = "update_CATEGORY_success";
+export const UPDATE_CATEGORY_FAIL = "update_CATEGORY_failure";
+export const UPDATE_CATEGORY_RESET = "update_CATEGORY_reset";

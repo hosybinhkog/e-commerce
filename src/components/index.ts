@@ -12,3 +12,7 @@ export { default as Transition } from "./Transition";
 export { default as TopNav } from "./Topnav";
 export { default as Loading } from "./Loading";
 export { default as InputAdmin } from "./Admin/InputAdmin";
+export { default as SidebarCategory } from "./SidebarCategory";
+export { default as ProductDetails } from "./Products/ProductDetails";
+export { default as SectionCategory } from "./SectionCategory";
+export { default as FeedCategory } from "./FeedCategory";

@@ -11,6 +11,7 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
   const { isAuthenticated, user, loading } = useAppSelector(
     (state) => state.user
   );
+
   return (
     <>
       {loading === false ? (

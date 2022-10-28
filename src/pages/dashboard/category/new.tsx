@@ -64,7 +64,7 @@ const newCategory: NextPage = () => {
     if (error) {
       toast.error(error);
     }
-  }, [success, toast, error, router]);
+  }, [success, toast, error]);
 
   return (
     <Layout>

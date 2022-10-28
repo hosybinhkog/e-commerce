@@ -1,4 +1,5 @@
 import ProductCartItem from "@/components/Products/ProductCartItem";
+import { useAppSelector } from "@/hooks";
 import LayoutMain from "@/layouts/commom/LayoutMain";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
@@ -8,7 +9,10 @@ import React from "react";
 import Currency from "react-currency-formatter";
 
 const Cart: NextPage = () => {
-  const itemsCart = [];
+  const { cartItems } = useAppSelector((state) => state.cart);
+
+  const total = cartItems.reduce((pre, current) => {}, 0);
+
   const { data: session } = useSession();
   return (
     <div>
@@ -25,7 +29,7 @@ const Cart: NextPage = () => {
               objectFit='contain'
             />
             <div className='flex flex-col p-5 md:space-y-10 space-y-3 bg-white'>
-              {itemsCart.length > 0 ? (
+              {cartItems.length > 0 ? (
                 <h1 className='text-3xl font-semibold border-b pb-4'>
                   Your Cart Shopping
                 </h1>
@@ -53,20 +57,14 @@ const Cart: NextPage = () => {
                   </div>
                 </div>
               )}
-              <ProductCartItem />
-              <ProductCartItem />
-              <ProductCartItem />
-              <ProductCartItem />
-              <ProductCartItem />
-              <ProductCartItem />
-              <ProductCartItem />
+              {/* <ProductCartItem /> */}
             </div>
           </div>
           <div className='flex flex-col bg-white p-10 shadow-md'>
-            {itemsCart.length > 0 && (
+            {cartItems.length > 0 && (
               <React.Fragment>
                 <h2 className='whitespace-nowrap'>
-                  Subtotal 4 items:
+                  Subtotal {cartItems.length} items:
                   <span className='font-bold'>
                     <Currency quantity='900000' currency='GBP' />
                   </span>

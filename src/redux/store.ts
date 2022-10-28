@@ -47,6 +47,7 @@ const reducers = combineReducers({
   createCategory: categoryReducer.createCategoryReducer,
   categories: categoryReducer.getAllCategory,
   newProduct: productReducerAll.newProductReducer,
+  categoryDetails: categoryReducer.categoryDetailsReducer,
 });
 
 const middleware = [thunk];

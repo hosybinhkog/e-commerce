@@ -79,7 +79,7 @@ const login: NextPage = () => {
         </div>
       ));
     }
-  }, [dispatch, error, isAuthenticated, router]);
+  }, [dispatch, error, isAuthenticated]);
 
   return (
     <>

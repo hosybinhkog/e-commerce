@@ -1,6 +1,7 @@
+import { Loading } from "@/components";
 import { useAppSelector } from "@/hooks";
-import Login from "@/pages/login";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
 interface PrivateRouteProps {
   children: React.ReactNode;
@@ -9,11 +10,17 @@ interface PrivateRouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const { isAuthenticated, loading } = useAppSelector((state) => state.user);
 
-  if (!(isAuthenticated || loading)) {
-    return <Login />;
-  } else {
-    return <>{children}</>;
-  }
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
+  }, [router, isAuthenticated]);
+
+  return (
+    <>{loading === false ? <Loading /> : <>{isAuthenticated && children}</>}</>
+  );
 };
 
 export default PrivateRoute;

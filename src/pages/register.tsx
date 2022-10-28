@@ -87,7 +87,7 @@ const register: NextPage = () => {
     if (isAuthenticated) {
       router.push("/");
     }
-  }, [router, isAuthenticated, error, toast, success]);
+  }, [isAuthenticated, error, toast, success]);
 
   return (
     <LayoutMain bgWhite>

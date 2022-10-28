@@ -1,4 +1,5 @@
 import { InputAdmin } from "@/components";
+import { NEW_PRODUCT_RESET } from "@/constants/redux.contants";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import Layout from "@/layouts/admin/Layout";
 import { getCategories } from "@/redux/actions/category.actions";
@@ -28,6 +29,7 @@ const newProduct: NextPage = () => {
 
   const handleFormSubmitNewProduct = (e) => {
     e.preventDefault();
+    const id = toast.loading("Create product....");
 
     const formData = new FormData();
 
@@ -40,7 +42,6 @@ const newProduct: NextPage = () => {
     formData.set("categoryId", category);
     formData.set("Stock", Stock.toString());
 
-    const id = toast.loading("Create product....");
     // @ts-ignore
     images.forEach((image) => {
       formData.append("imgs", image);
@@ -79,7 +80,8 @@ const newProduct: NextPage = () => {
 
     if (success) {
       toast.success("Create product successfully!!");
-      router.push("/dashboard/category");
+      router.push("/dashboard/product");
+      dispatch({ type: NEW_PRODUCT_RESET });
     }
 
     if (error) {

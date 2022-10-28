@@ -97,7 +97,7 @@ export const productDetailsReducer = (state: any = { product: {} }, action) => {
   }
 };
 
-export const newReviewReducer = (state = {}, action) => {
+export const newReviewReducer = (state: any = {}, action) => {
   switch (action.type) {
     case NEW_REVIEW_REQUEST:
       return {

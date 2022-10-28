@@ -6,6 +6,9 @@ import {
   ALL_CATEGORY_REQUESTS,
   ALL_CATEGORY_SUCCESS,
   ALL_CATEGORY_FAILURE,
+  CATEGORY_DETAIL_REQUESTS,
+  CATEGORY_DETAIL_SUCCESS,
+  CATEGORY_DETAIL_FAILURE,
 } from "@/constants/redux.contants";
 
 export const createCategory = (categoryData) => async (dispatch) => {
@@ -44,6 +47,24 @@ export const getCategories = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ALL_CATEGORY_FAILURE,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: CATEGORY_DETAIL_REQUESTS });
+
+    const { data } = await clientAxios.get(`api/v1/category/${id}`);
+
+    dispatch({
+      type: CATEGORY_DETAIL_SUCCESS,
+      payload: data.category,
+    });
+  } catch (error) {
+    dispatch({
+      type: CATEGORY_DETAIL_FAILURE,
       payload: error.response.data.message,
     });
   }

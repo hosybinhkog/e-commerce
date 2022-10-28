@@ -1,54 +1,77 @@
 import { useAppDispatch } from "@/hooks";
+import { Product } from "@/interfaces";
+import { addItemsToCart } from "@/redux/actions/cart.actions";
 import { StarIcon } from "@heroicons/react/solid";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Currency from "react-currency-formatter";
+import toast from "react-hot-toast";
 
-interface ProductItemProps {}
+interface ProductItemProps {
+  product: Product;
+}
 
-const ProductItem: React.FC<ProductItemProps> = () => {
+const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   // Math.floor(Math.random() * (MAX_RATING - MIN_RATING _1)) + MINRATING
-  const [rating, setRating] = useState<number>(2);
+  const [rating, setRating] = useState<number>(product.rating);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
-  const handleAddToCart = () => {};
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+
+    // @ts-ignore
+    dispatch(addItemsToCart(product._id, 1));
+    toast.success("Add to successfully", {
+      duration: 2000,
+      position: "bottom-center",
+    });
+  };
+
+  const handleClickDetails = () =>
+    router.push(`/product/details/${product._id}`);
 
   return (
     <div className='relative flex flex-col m-5 bg-white  z-30 p-10 rounded-md'>
       <p className='absolute top-2 right-2 text-xs italic text-gray-400'>
-        category
+        {product.category ? product.category : "category"}
       </p>
-      {/* <Image
-        src='https://images-na.ssl-images-amazon.com/images/W/WEBP_402378-T2/images/G/01/AmazonExports/Fuji/2021/September/DashboardCards/Fuji_Desktop_Dash_Kindle_1x._SY304_CB639752818_.jpg'
-        width={200}
-        height={300}
-      /> */}
       <img
-        src='https://images-na.ssl-images-amazon.com/images/W/WEBP_402378-T2/images/G/01/AmazonExports/Fuji/2021/September/DashboardCards/Fuji_Desktop_Dash_Kindle_1x._SY304_CB639752818_.jpg'
-        className='w-full max-h-[350px] object-contain rounded-lg'
+        onClick={handleClickDetails}
+        src={
+          product.imgs[0].url ||
+          "https://images-na.ssl-images-amazon.com/images/W/WEBP_402378-T2/images/G/01/AmazonExports/Fuji/2021/September/DashboardCards/Fuji_Desktop_Dash_Kindle_1x._SY304_CB639752818_.jpg"
+        }
+        className='w-full h-full max-h-[350px] cursor-pointer object-contain rounded-lg'
       />
-      <h4 className='my-3 '>Sports Research supplements</h4>
+      <h4 onClick={handleClickDetails} className='my-3 cursor-pointer'>
+        Sports Research supplements
+      </h4>
       <div className='flex items-center'>
-        {Array(rating)
-          .fill(rating)
+        {Array(product.rating)
+          .fill(product.rating)
           .map((_, i) => (
             <StarIcon className='h-5 text-yellow-500' key={i} />
           ))}
+        {product.rating === 0 && "0 rating"}
       </div>
       <p className='text-xs my-2 line-clamp-2'>
-        description snippet Lorem ipsum dolor sit amet, consectetur adipisicing
-        elit. Omnis voluptates officia, modi voluptatibus cupiditate vitae
-        dolores ipsa ad assumenda placeat temporibus amet hic minima accusamus,
-        reprehenderit totam commodi, aut adipisci et! Quis?
+        {product.description ||
+          "description snippet Lorem ipsum dolor sit amet, consectetur adipisicingelit. Omnis voluptates officia, modi voluptatibus cupiditate vitaedolores ipsa ad assumenda placeat temporibus amet hic minima accusamus,reprehenderit totam commodi, aut adipisci et! Quis?"}
       </p>
       <div className='mb-5'>
-        <Currency quantity={222} currency='GBP' />
+        <Currency quantity={product.price} currency='GBP' />
       </div>
       {/* has Price  */}
       <div className='flex items-center space-x-2 -mt-5'>
         <img className='w-12' src='https://links.papareact.com/fdw' alt='' />
         <p className='text-xs text-gray-500'>FREE Next-day Delivery</p>
       </div>
-      <button onClick={handleAddToCart} className='mt-auto btn'>
+      <button
+        disabled={!product.Stock}
+        onClick={handleAddToCart}
+        className='mt-auto btn'
+      >
         Add to cart
       </button>
     </div>

@@ -7,6 +7,9 @@ import {
   ALL_CATEGORY_REQUESTS,
   ALL_CATEGORY_SUCCESS,
   ALL_CATEGORY_FAILURE,
+  CATEGORY_DETAIL_REQUESTS,
+  CATEGORY_DETAIL_SUCCESS,
+  CATEGORY_DETAIL_FAILURE,
 } from "@/constants/redux.contants";
 
 export const createCategoryReducer = (state: any = {}, action) => {
@@ -74,5 +77,37 @@ export const getAllCategory = (state: any = { categories: [] }, action) => {
       };
     default:
       return { ...state };
+  }
+};
+
+export const categoryDetailsReducer = (
+  state: any = { categiry: {} },
+  action
+) => {
+  switch (action.type) {
+    case CATEGORY_DETAIL_REQUESTS:
+      return {
+        loading: true,
+        ...state,
+      };
+    case CATEGORY_DETAIL_SUCCESS:
+      return {
+        loading: false,
+        product: action.payload,
+      };
+    case CATEGORY_DETAIL_FAILURE:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return {
+        ...state,
+      };
   }
 };
