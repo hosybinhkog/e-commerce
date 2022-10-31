@@ -7,7 +7,7 @@ import {
 
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
   const { data } = await clientAxios.get(`api/v1/product/${id}`);
-
+  console.log(data);
   dispatch({
     type: ADD_TO_CART,
     payload: {
@@ -17,6 +17,8 @@ export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
       image: data.product.imgs[0].url,
       stock: data.product.Stock,
       quantity,
+      description: data.product.description,
+      rating: data.product.rating,
     },
   });
 

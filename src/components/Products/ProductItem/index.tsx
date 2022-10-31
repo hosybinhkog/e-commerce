@@ -2,6 +2,7 @@ import { useAppDispatch } from "@/hooks";
 import { Product } from "@/interfaces";
 import { addItemsToCart } from "@/redux/actions/cart.actions";
 import { StarIcon } from "@heroicons/react/solid";
+import { Rate } from "antd";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Currency from "react-currency-formatter";
@@ -9,9 +10,10 @@ import toast from "react-hot-toast";
 
 interface ProductItemProps {
   product: Product;
+  imageHeight?: boolean;
 }
 
-const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
+const ProductItem: React.FC<ProductItemProps> = ({ product, imageHeight }) => {
   // Math.floor(Math.random() * (MAX_RATING - MIN_RATING _1)) + MINRATING
   const [rating, setRating] = useState<number>(product.rating);
   const dispatch = useAppDispatch();
@@ -42,18 +44,16 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           product.imgs[0].url ||
           "https://images-na.ssl-images-amazon.com/images/W/WEBP_402378-T2/images/G/01/AmazonExports/Fuji/2021/September/DashboardCards/Fuji_Desktop_Dash_Kindle_1x._SY304_CB639752818_.jpg"
         }
-        className='w-full h-full max-h-[350px] cursor-pointer object-contain rounded-lg'
+        className={`w-full h-full ${
+          imageHeight ? `max-h-[200px]` : "max-h-[350px]"
+        } cursor-pointer object-contain rounded-lg`}
       />
       <h4 onClick={handleClickDetails} className='my-3 cursor-pointer'>
         Sports Research supplements
       </h4>
       <div className='flex items-center'>
-        {Array(product.rating)
-          .fill(product.rating)
-          .map((_, i) => (
-            <StarIcon className='h-5 text-yellow-500' key={i} />
-          ))}
-        {product.rating === 0 && "0 rating"}
+        <Rate value={product.rating} disabled />
+        {product.rating === 0 ? "0 rating" : `${product.rating} ratings`}
       </div>
       <p className='text-xs my-2 line-clamp-2'>
         {product.description ||
@@ -70,7 +70,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
       <button
         disabled={!product.Stock}
         onClick={handleAddToCart}
-        className='mt-auto btn'
+        className='mt-auto btn disabled:opacity-50'
       >
         Add to cart
       </button>

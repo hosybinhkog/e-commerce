@@ -31,7 +31,7 @@ const ProtectRouter: React.FC<ProtectRoute> = ({ children }) => {
     }, 1000);
   }, []);
 
-  if (loading) <LoadingSpin />;
+  if (loading) return <LoadingSpin />;
 
   return <>{children}</>;
 };

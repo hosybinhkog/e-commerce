@@ -19,7 +19,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   }, [router, isAuthenticated]);
 
   return (
-    <>{loading === false ? <Loading /> : <>{isAuthenticated && children}</>}</>
+    <>{loading === true ? <Loading /> : <>{isAuthenticated && children}</>}</>
   );
 };
 

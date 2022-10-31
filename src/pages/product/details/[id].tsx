@@ -1,14 +1,16 @@
 import { ProductDetails, SectionCategory, Loading } from "@/components";
 import ReviewCard from "@/components/ReviewCard";
+import { NEW_REVIEW_RESET } from "@/constants/redux.contants";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import LayoutMain from "@/layouts/commom/LayoutMain";
+import { addItemsToCart } from "@/redux/actions/cart.actions";
 import { getCategories } from "@/redux/actions/category.actions";
 import {
   clearErrors,
   getDetails,
   newReview,
 } from "@/redux/actions/product.actions";
-import { Rate } from "antd";
+import { InputNumber, Pagination, Rate } from "antd";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -19,6 +21,9 @@ const ProductDetail: NextPage = () => {
   const dispatch = useAppDispatch();
   const [comment, setComment] = useState<string>("");
   const [rating, setRating] = useState<number>(5);
+  const [quanlity, setQuantity] = useState(1);
+  const [currentComment, setCurrentComment] = useState<number>(1);
+  const [defaultSizePage, setDefaultSizePage] = useState<number>(5);
   const { loading, product, error } = useAppSelector(
     (state) => state.productDetails
   );
@@ -31,7 +36,7 @@ const ProductDetail: NextPage = () => {
 
   const { user } = useAppSelector((state) => state.user);
 
-  const handleSubmitCreateCommentNew = async (e) => {
+  const handleSubmitCreateCommentNew = (e) => {
     e.preventDefault();
     const id = toast.loading("Post comment...");
     const formData = new FormData();
@@ -40,24 +45,41 @@ const ProductDetail: NextPage = () => {
     formData.set("productId", router.query.id as string);
 
     //@ts-ignore
-    await dispatch(newReview(formData));
+    dispatch(newReview(formData));
     setComment("");
+    setRating(5);
     toast.remove(id);
   };
 
-  useEffect(() => {
-    // @ts-ignore
-    dispatch(getDetails(router.query.id));
+  const decreaseQuantity = () => {
+    if (product.Stock <= quanlity) {
+      toast.error("Quantity < Stock");
+      return;
+    }
+    setQuantity((quanlity) => quanlity + 1);
+  };
 
-    // @ts-ignore
-    dispatch(getCategories());
+  const imcreaseQuantity = () => {
+    if (quanlity === 1) {
+      toast.error("Quantity >= 0");
+      return;
+    }
+    setQuantity((quanlity) => quanlity - 1);
+  };
 
-    window.scrollTo(0, 0);
-  }, [dispatch]);
+  const handleAddToCart = () => {
+    // @ts-ignore
+    dispatch(addItemsToCart(router.query.id, quanlity));
+    toast.success("Add cart successfully");
+  };
+
+  const reviewShowNumber =
+    currentComment === 1 ? 0 : (currentComment - 1) * defaultSizePage;
 
   useEffect(() => {
     if (success) {
       toast.success("Post comment success !");
+      dispatch({ type: NEW_REVIEW_RESET });
     }
 
     if (veviewError) {
@@ -71,6 +93,14 @@ const ProductDetail: NextPage = () => {
 
       toast.error("Product is not found");
     }
+
+    // @ts-ignore
+    dispatch(getDetails(router.query.id));
+
+    // @ts-ignore
+    dispatch(getCategories());
+
+    window.scrollTo(0, 0);
   }, [dispatch, veviewError, success, error]);
 
   return (
@@ -81,18 +111,51 @@ const ProductDetail: NextPage = () => {
         <div>
           <LayoutMain>
             <div>
-              <ProductDetails product={product} />
+              <ProductDetails
+                product={product}
+                quanlity={quanlity}
+                decreaseQuantity={decreaseQuantity}
+                imcreaseQuantity={imcreaseQuantity}
+                handleAddToCart={handleAddToCart}
+              />
               <div className='w-full mx-auto flex flex-col p-5 my-10 border-[2px] shadow-yellow-500 shadow rounded-sm space-y-2 bg-white'>
                 <h3 className='text-4xl font-bold'>Comments</h3>
                 <hr className='pb-2' />
                 <div className='flex flex-col gap-3'>
                   {product?.reviews &&
-                    product.reviews.map((review) => <ReviewCard />)}
+                    product.reviews
+                      .slice(
+                        reviewShowNumber,
+                        reviewShowNumber + defaultSizePage
+                      )
+                      .map((review) => (
+                        <ReviewCard key={review._id} review={review} />
+                      ))}
                   {!product?.reviews?.length && (
                     <p className='italic text-xs text-gray-500'>
                       0 comments of products
                     </p>
                   )}
+                  <div className='flex items-center justify-center gap-3'>
+                    <Pagination
+                      size='default'
+                      current={currentComment}
+                      pageSize={defaultSizePage}
+                      responsive
+                      total={product?.reviews?.length}
+                      onChange={(e) => setCurrentComment(e)}
+                    />
+                    <div className='flex items-center gap-2'>
+                      <span>Set Size Page</span>
+                      <InputNumber
+                        min={1}
+                        max={10}
+                        size='small'
+                        value={defaultSizePage}
+                        onChange={(e) => setDefaultSizePage(e)}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               <hr className='max-w-lg my-5 mx-auto border border-yellow-500' />

@@ -1,19 +1,35 @@
-import ProductCartItem from "@/components/Products/ProductCartItem";
-import { useAppSelector } from "@/hooks";
+import { ProductCartItem } from "@/components";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import LayoutMain from "@/layouts/commom/LayoutMain";
+import { removeItemsFormCart } from "@/redux/actions/cart.actions";
 import { NextPage } from "next";
-import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React from "react";
 import Currency from "react-currency-formatter";
+import toast from "react-hot-toast";
 
 const Cart: NextPage = () => {
+  const router = useRouter();
+  const { user } = useAppSelector((state) => state.user);
   const { cartItems } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
 
-  const total = cartItems.reduce((pre, current) => {}, 0);
+  const total = cartItems.reduce(
+    (acc, item) => acc + item.quantity * item.price,
+    0
+  );
+  // .toLocaleString("vi", { style: "currency", currency: "GBP" });
+  // FORMAT TO VND
 
-  const { data: session } = useSession();
+  const handlleRemoveItem = (id) => {
+    const idNoti = toast.loading("Loading...");
+    //@ts-ignore
+    dispatch(removeItemsFormCart(id));
+    toast.success("Remove success...", { id: idNoti });
+  };
+
   return (
     <div>
       <Head>
@@ -30,9 +46,18 @@ const Cart: NextPage = () => {
             />
             <div className='flex flex-col p-5 md:space-y-10 space-y-3 bg-white'>
               {cartItems.length > 0 ? (
-                <h1 className='text-3xl font-semibold border-b pb-4'>
-                  Your Cart Shopping
-                </h1>
+                <>
+                  <h1 className='text-3xl font-semibold border-b pb-4'>
+                    Your Cart Shopping
+                  </h1>
+                  {cartItems.map((item) => (
+                    <ProductCartItem
+                      handlleRemoveItem={handlleRemoveItem}
+                      productCart={item}
+                      key={item.product}
+                    />
+                  ))}
+                </>
               ) : (
                 <div className='flex gap-2 items-center flex-col md:flex-row md:justify-start justify-center text-center md:text-left '>
                   <Image
@@ -57,27 +82,30 @@ const Cart: NextPage = () => {
                   </div>
                 </div>
               )}
-              {/* <ProductCartItem /> */}
             </div>
           </div>
           <div className='flex flex-col bg-white p-10 shadow-md'>
-            {cartItems.length > 0 && (
+            {cartItems?.length && (
               <React.Fragment>
                 <h2 className='whitespace-nowrap'>
-                  Subtotal {cartItems.length} items:
+                  Subtotal {cartItems?.length} items:
                   <span className='font-bold'>
-                    <Currency quantity='900000' currency='GBP' />
+                    <Currency quantity={total || 0} currency='GBP' />
                   </span>
                 </h2>
                 <button
+                  onClick={() => {
+                    if (user) router.push("/shipping");
+                    router.push("/login");
+                  }}
                   role={"link"}
-                  disabled={!session}
+                  disabled={!user}
                   className={`btn mt-2 ${
-                    !session &&
+                    !user &&
                     "from-gray-300 to-gray-500 border-gray-200  text-gray-300"
                   }`}
                 >
-                  {session ? "Proceed to checkout" : "Please! Sign in"}
+                  {user ? "Proceed to checkout" : "Please! Sign in"}
                 </button>
               </React.Fragment>
             )}

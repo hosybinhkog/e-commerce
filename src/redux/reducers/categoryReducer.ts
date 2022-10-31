@@ -81,7 +81,7 @@ export const getAllCategory = (state: any = { categories: [] }, action) => {
 };
 
 export const categoryDetailsReducer = (
-  state: any = { categiry: {} },
+  state: any = { category: {} },
   action
 ) => {
   switch (action.type) {
@@ -93,7 +93,7 @@ export const categoryDetailsReducer = (
     case CATEGORY_DETAIL_SUCCESS:
       return {
         loading: false,
-        product: action.payload,
+        category: action.payload,
       };
     case CATEGORY_DETAIL_FAILURE:
       return {

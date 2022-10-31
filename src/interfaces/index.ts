@@ -48,3 +48,25 @@ export interface Category {
   user: string;
   description: string;
 }
+
+export interface IProductCartItem {
+  image?: string;
+  name?: string;
+  price?: number | string;
+  product: string;
+  quantity: number;
+  stock?: number;
+  description?: string;
+  rating?: number | string;
+}
+
+export interface IReview {
+  username?: string;
+  rating: number;
+  comment: string;
+  url: string;
+  userId?: string;
+  _id?: string;
+  createdAt: string;
+  updatedAt: string;
+}

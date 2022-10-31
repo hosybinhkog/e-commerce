@@ -1,8 +1,9 @@
+import { IReview } from "@/interfaces";
 import React from "react";
 import ReactStars from "react-rating-stars-component";
 
 interface ReviewCardProps {
-  review?: any;
+  review?: IReview;
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
@@ -20,7 +21,10 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
         <div className=' flex-shrink-0'>
           <div className='border-yellow-400 p-2 border-[2px] mr-3 rounded-full'>
             <img
-              src='https://alliance.site.drupaldisttest.cc.columbia.edu/themes/custom/columbia/assets/img/people-default.svg'
+              src={
+                review.url ||
+                "https://alliance.site.drupaldisttest.cc.columbia.edu/themes/custom/columbia/assets/img/people-default.svg"
+              }
               alt=''
               className='h-10 w-10 rounded-full'
             />
@@ -28,7 +32,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
         </div>
         <div className='flex flex-col'>
           <p className='text-xs font-bold'>
-            {review?.name || "Nguyễn Xuân Thành"}
+            {review?.username || "Nguyễn Xuân Thành"}
           </p>
           <ReactStars {...options} />
           <span className='text-base text-gray-500 max-w-2xl lg:max-w-full line-clamp-5'>

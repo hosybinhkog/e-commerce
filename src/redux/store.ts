@@ -19,7 +19,9 @@ import {
 const initialState: any = {
   cart: {
     cartItems:
-      typeof window !== "undefined" && localStorage.getItem("cartItems")
+      typeof window !== "undefined" &&
+      localStorage &&
+      localStorage.getItem("cartItems")
         ? JSON.parse(localStorage.getItem("cartItems"))
         : [],
     shippingInfo:

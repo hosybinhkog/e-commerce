@@ -1,17 +1,26 @@
 import { Product } from "@/interfaces";
-import { StarIcon } from "@heroicons/react/solid";
-import Currency from "react-currency-formatter";
+import { MinusSmIcon } from "@heroicons/react/outline";
+import { PlusIcon } from "@heroicons/react/solid";
+import { Carousel, InputNumber, Rate } from "antd";
 import React from "react";
-import { Carousel } from "antd";
+import Currency from "react-currency-formatter";
 
 interface ProductItem {
   product: Product;
+  quanlity: number;
+  decreaseQuantity: () => void;
+  imcreaseQuantity: () => void;
+  handleAddToCart: () => void;
 }
 
-const ProductItem: React.FC<ProductItem> = ({ product }) => {
+const ProductItem: React.FC<ProductItem> = ({
+  product,
+  quanlity,
+  decreaseQuantity,
+  imcreaseQuantity,
+  handleAddToCart,
+}) => {
   const isImage = product?.imgs ? product.imgs.map((item) => item.url) : [];
-
-  console.log(isImage);
 
   return (
     <>
@@ -20,12 +29,7 @@ const ProductItem: React.FC<ProductItem> = ({ product }) => {
           <div className='container px-5 py-24 mx-auto'>
             <div className='lg:w-4/5 mx-auto flex flex-wrap'>
               <div className='lg:w-1/2 w-full'>
-                <Carousel
-                  lazyLoad='progressive'
-                  autoplay
-                  dots
-                  dotPosition='bottom'
-                >
+                <Carousel autoplay dots dotPosition='bottom'>
                   {isImage.length &&
                     isImage?.map((item) => (
                       <div key={item}>
@@ -51,11 +55,7 @@ const ProductItem: React.FC<ProductItem> = ({ product }) => {
                 </h1>
                 <div className='flex mb-4'>
                   <span className='flex items-center'>
-                    {Array(product.rating)
-                      .fill(product.rating)
-                      .map((_, i) => (
-                        <StarIcon className='h-5 text-yellow-500' key={i} />
-                      ))}
+                    <Rate value={product.rating} disabled />
                     {product.rating === 0 && "0 rating"}
                     <span className='text-gray-600 ml-3'>
                       {product?.reviews?.length} reviews
@@ -104,12 +104,31 @@ const ProductItem: React.FC<ProductItem> = ({ product }) => {
                   {product?.description ||
                     "Fam locavore kickstarter distillery. Mixtape chillwave tumericsriracha taximy chia microdosing tilde DIY. XOXO fam indxgojuiceramps cornhole raw denim forage brooklyn. Everyday carry+1 seitan poutine tumeric. Gastropub blue bottle austinlisticle pour-over, neutra jean shorts keytar banjo tattooedumami cardigan."}
                 </p>
-
+                <div className='flex gap-2 items-center'>
+                  <span>Quanlity</span>
+                  <MinusSmIcon
+                    onClick={imcreaseQuantity}
+                    className='h-5 w-5 cursor-pointer p-1 rounded-full bg-yellow-400 text-gray-800 flex items-center justify-center hover:scale-105'
+                  />
+                  <InputNumber
+                    min={1}
+                    max={product.Stock}
+                    value={quanlity}
+                    // onChange={}
+                  />
+                  <PlusIcon
+                    onClick={decreaseQuantity}
+                    className='h-5 w-5 cursor-pointer p-1 rounded-full bg-yellow-400 text-gray-800 flex items-center justify-center hover:scale-105'
+                  />
+                </div>
                 <div className='flex'>
                   <span className='title-font font-medium text-2xl text-gray-900'>
                     <Currency quantity={product.price || 0} currency='GBP' />
                   </span>
-                  <button className='flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded'>
+                  <button
+                    className='flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded'
+                    onClick={handleAddToCart}
+                  >
                     Add to cart
                   </button>
                   <button className='rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4'>
