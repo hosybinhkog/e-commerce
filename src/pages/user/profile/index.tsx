@@ -52,7 +52,7 @@ const Profile: NextPage = () => {
                 />
                 <AccountCard
                   description='Track, return, or buy things again'
-                  href='/user/orders'
+                  href='/user/order'
                   src='https://images-na.ssl-images-amazon.com/images/G/01/x-locale/cs/help/images/gateway/self-service/order._CB660668735_.png '
                   title='Your Orders'
                 />

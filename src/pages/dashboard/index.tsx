@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import Layout from "@/layouts/admin/Layout";
 import { getProduct } from "@/redux/actions/product.actions";
 import { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -12,8 +13,6 @@ const Dashboard: NextPage = () => {
   const { loading, products, error, productsCount, resultPerPage } =
     useAppSelector((state) => state.products);
 
-  console.log(products);
-
   useEffect(() => {
     // @ts-ignore
     dispatch(getProduct());
@@ -21,7 +20,10 @@ const Dashboard: NextPage = () => {
 
   return (
     <Layout>
-      <p>Layout</p>
+      <Head>
+        <title>Admin - Dashboard</title>
+      </Head>
+      <div></div>
     </Layout>
   );
 };

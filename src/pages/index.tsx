@@ -25,7 +25,7 @@ const Home: NextPage = () => {
     // @ts-ignore
     dispatch(getProduct(router.query.keyword, currentPage, cateogriesSearch));
     window.scrollTo(0, 0);
-  }, [dispatch, currentPage, cateogriesSearch]);
+  }, [dispatch, currentPage, cateogriesSearch, router.query.keyword]);
 
   return (
     <div>

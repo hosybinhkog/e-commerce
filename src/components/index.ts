@@ -16,3 +16,4 @@ export { default as SidebarCategory } from "./SidebarCategory";
 export { default as ProductDetails } from "./Products/ProductDetails";
 export { default as SectionCategory } from "./SectionCategory";
 export { default as FeedCategory } from "./FeedCategory";
+export { default as PaymentAuth } from "./PaymentAuth";

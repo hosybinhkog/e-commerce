@@ -50,6 +50,7 @@ const reducers = combineReducers({
   categories: categoryReducer.getAllCategory,
   newProduct: productReducerAll.newProductReducer,
   categoryDetails: categoryReducer.categoryDetailsReducer,
+  fetchOrders: orderReducer.fetchOdersReducer,
 });
 
 const middleware = [thunk];

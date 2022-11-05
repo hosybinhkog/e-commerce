@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
-import { NextPage } from "next";
+import { Loading, PaymentAuth } from "@/components";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import LayoutMain from "@/layouts/commom/LayoutMain";
 import axios from "axios";
-import { Loading } from "@/components";
-import PrivateRoute from "@/layouts/auth/PrivateRoute";
+import { NextPage } from "next";
+import { useEffect, useState } from "react";
 
 const Payment: NextPage = () => {
   const [stripeApiKey, setStripeApiKey] = useState<string>("");
+
   async function getStripeApiKey() {
     const { data } = await axios.get(
       "http://localhost:5555/api/v1/payment/stripapikey",
@@ -22,10 +21,6 @@ const Payment: NextPage = () => {
     setStripeApiKey(data.stripeApiKey);
   }
 
-  const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
-
-  console.log(orderInfo);
-
   useEffect(() => {
     getStripeApiKey();
   }, []);
@@ -34,11 +29,7 @@ const Payment: NextPage = () => {
     <>
       {stripeApiKey ? (
         <Elements stripe={loadStripe(stripeApiKey)}>
-          <PrivateRoute>
-            <LayoutMain>
-              <div></div>
-            </LayoutMain>
-          </PrivateRoute>
+          <PaymentAuth />
         </Elements>
       ) : (
         <Loading />

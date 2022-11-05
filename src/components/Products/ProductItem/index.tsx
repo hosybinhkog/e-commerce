@@ -1,7 +1,6 @@
 import { useAppDispatch } from "@/hooks";
 import { Product } from "@/interfaces";
 import { addItemsToCart } from "@/redux/actions/cart.actions";
-import { StarIcon } from "@heroicons/react/solid";
 import { Rate } from "antd";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -49,7 +48,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, imageHeight }) => {
         } cursor-pointer object-contain rounded-lg`}
       />
       <h4 onClick={handleClickDetails} className='my-3 cursor-pointer'>
-        Sports Research supplements
+        {product.name}
       </h4>
       <div className='flex items-center'>
         <Rate value={product.rating} disabled />

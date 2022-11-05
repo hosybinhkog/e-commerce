@@ -1,4 +1,5 @@
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { useAppDispatch, useAppSelector, useDebounce } from "@/hooks";
+import { getProduct } from "@/redux/actions/product.actions";
 import { logout } from "@/redux/actions/user.actions";
 import {
   MapIcon,
@@ -9,7 +10,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const Header: React.FC = () => {
@@ -19,12 +20,23 @@ const Header: React.FC = () => {
   const { cartItems } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
+  const [keyword, setKeyword] = useState<string>("");
+  const deboucedSearchTerm = useDebounce(keyword, 500);
+
   const handleClickLoginOrLogout = () => {
     if (isAuthenticated) {
       router.push("/user/profile");
     } else {
       router.push("/login");
     }
+  };
+
+  const handleSubmitSearchProduct = (e) => {
+    e.preventDefault();
+  };
+
+  const handleChangeInputSearch = (e) => {
+    setKeyword(e.target.value);
   };
 
   const handleLickLogout = () => {
@@ -34,6 +46,15 @@ const Header: React.FC = () => {
       toast.success("Loggin success fully!!", { duration: 1500 });
     }
   };
+
+  useEffect(() => {
+    if (deboucedSearchTerm) {
+      router.query.keyword = keyword;
+      router.push(router);
+    } else {
+      router.query.keyword = undefined;
+    }
+  }, [deboucedSearchTerm]);
 
   return (
     <header className='sticky top-0 z-50 left-0 right-0'>
@@ -58,9 +79,15 @@ const Header: React.FC = () => {
           </div>
         </div>
         {/* SEARCH INPUT HEADER  */}
-        <form className='bg-yellow-400 hidden md:flex items-center h-10 rounded-md sm:flex flex-grow cursor-pointer '>
+        <form
+          onSubmit={handleSubmitSearchProduct}
+          className='bg-yellow-400 hidden md:flex items-center h-10 rounded-md sm:flex flex-grow cursor-pointer '
+        >
           <input
+            onChange={handleChangeInputSearch}
+            value={keyword}
             type='text'
+            placeholder='Search product now....'
             className='p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none focus:ring-4 focus:ring-yellow-300 transition-all duration-200 ease-out px-4'
           />
           <SearchIcon className='h-12 text-gray-800 font-semibold p-3' />
@@ -79,7 +106,10 @@ const Header: React.FC = () => {
             </p>
           </div>
 
-          <div className='cursor-pointer link'>
+          <div
+            className='cursor-pointer link'
+            onClick={() => router.push("/user/order")}
+          >
             <p>Returns</p>
             <p className='font-extrabold md:text-sm'>& Orders</p>
           </div>

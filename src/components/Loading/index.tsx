@@ -1,11 +1,19 @@
+import { Spin } from "antd";
 import React from "react";
 
 const Loading: React.FC = () => {
   return (
-    <div className='flex items-center justify-center space-x-2 animate-bounce'>
-      <div className='w-8 h-8 bg-blue-400 rounded-full'></div>
-      <div className='w-8 h-8 bg-green-400 rounded-full'></div>
-      <div className='w-8 h-8 bg-black rounded-full'></div>
+    <div className='route__loading'>
+      <Spin />
+      <style jsx>{`
+        .route__loading {
+          width: 100%;
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      `}</style>
     </div>
   );
 };

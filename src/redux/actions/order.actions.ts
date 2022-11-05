@@ -13,7 +13,33 @@ import {
   UPDATE_STATUS_FAILURE,
   UPDATE_STATUS_REQUEST,
   UPDATE_STATUS_SUCCESS,
+  ALL_ORDER_REQUEST,
+  ALL_ORDER_SUCCESS,
+  ALL_ORDER_FAIL,
 } from "@/constants/redux.contants";
+
+export const fetchOrders = () => async (dispatch) => {
+  try {
+    dispatch({ type: ALL_ORDER_REQUEST });
+
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
+
+    const { data } = await clientAxios.get("api/v1/order/admin", config);
+
+    dispatch({
+      type: ALL_ORDER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_ORDER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {

@@ -70,15 +70,20 @@ const Cart: NextPage = () => {
                     <h3 className='text-lg font-bold'>
                       Your Amazon Cart is empty
                     </h3>
-                    <span className='text-green-400 text-xs hover:underline cursor-pointer'>
+                    <span
+                      className='text-green-400 text-xs hover:underline cursor-pointer'
+                      onClick={() => router.push("/")}
+                    >
                       Shop today's deals
                     </span>
-                    <div className='flex gap-2 md:justify-start justify-center'>
-                      <button className='btn'>Sign in</button>
-                      <button className='px-3 py-2 border rounded-md border-gray-300 '>
-                        Register now
-                      </button>
-                    </div>
+                    {!user && (
+                      <div className='flex gap-2 md:justify-start justify-center'>
+                        <button className='btn'>Sign in</button>
+                        <button className='px-3 py-2 border rounded-md border-gray-300 '>
+                          Register now
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -95,7 +100,7 @@ const Cart: NextPage = () => {
                 </h2>
                 <button
                   onClick={() => {
-                    if (user) router.push("/shipping");
+                    if (user) return router.push("/shipping");
                     router.push("/login");
                   }}
                   role={"link"}
