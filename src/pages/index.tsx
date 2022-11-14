@@ -24,7 +24,11 @@ const Home: NextPage = () => {
     dispatch(getCategories());
     // @ts-ignore
     dispatch(getProduct(router.query.keyword, currentPage, cateogriesSearch));
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }, [dispatch, currentPage, cateogriesSearch, router.query.keyword]);
 
   return (

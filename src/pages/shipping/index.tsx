@@ -52,8 +52,6 @@ const Shipping: NextPage = () => {
     };
   });
 
-  console.log(dataSelect);
-
   return (
     <div>
       <PrivateRoute>

@@ -14,6 +14,7 @@ import {
   orderReducer,
   productReducer,
   categoryReducer,
+  adminCustomer,
 } from "./reducers";
 
 const initialState: any = {
@@ -51,6 +52,7 @@ const reducers = combineReducers({
   newProduct: productReducerAll.newProductReducer,
   categoryDetails: categoryReducer.categoryDetailsReducer,
   fetchOrders: orderReducer.fetchOdersReducer,
+  fetchAdminCustomer: adminCustomer.fetchCustomerReducer,
 });
 
 const middleware = [thunk];

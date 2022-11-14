@@ -32,7 +32,11 @@ const login: NextPage = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+      left: 0,
+    });
 
     if (error) {
       toast.error(error);

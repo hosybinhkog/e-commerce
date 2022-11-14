@@ -16,13 +16,17 @@ const Payment: NextPage = () => {
         withCredentials: true,
       }
     );
-    console.log(data);
 
     setStripeApiKey(data.stripeApiKey);
   }
 
   useEffect(() => {
     getStripeApiKey();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+      left: 0,
+    });
   }, []);
 
   return (

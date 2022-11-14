@@ -1,4 +1,9 @@
-import { ProductDetails, SectionCategory, Loading } from "@/components";
+import {
+  ProductDetails,
+  SectionCategory,
+  Loading,
+  InputAdmin,
+} from "@/components";
 import ReviewCard from "@/components/ReviewCard";
 import { NEW_REVIEW_RESET } from "@/constants/redux.contants";
 import { useAppDispatch, useAppSelector } from "@/hooks";
@@ -24,6 +29,7 @@ const ProductDetail: NextPage = () => {
   const [quanlity, setQuantity] = useState(1);
   const [currentComment, setCurrentComment] = useState<number>(1);
   const [defaultSizePage, setDefaultSizePage] = useState<number>(5);
+  const [imgs, setImgs] = useState<ArrayBuffer | undefined[]>([]);
   const { loading, product, error } = useAppSelector(
     (state) => state.productDetails
   );
@@ -73,6 +79,26 @@ const ProductDetail: NextPage = () => {
     toast.success("Add cart successfully");
   };
 
+  const handleDataChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    setImgs([]);
+
+    files.forEach((files) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          // @ts-ignore
+          setImgs((old) => [...old, reader.result]);
+        }
+      };
+
+      // @ts-ignore
+      reader.readAsDataURL(files);
+    });
+  };
+
   const reviewShowNumber =
     currentComment === 1 ? 0 : (currentComment - 1) * defaultSizePage;
 
@@ -100,7 +126,11 @@ const ProductDetail: NextPage = () => {
     // @ts-ignore
     dispatch(getCategories());
 
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }, [dispatch, veviewError, success, error]);
 
   return (
@@ -180,6 +210,25 @@ const ProductDetail: NextPage = () => {
                           onChange={(e) => setRating(e)}
                         />
                       </p>
+                      <InputAdmin
+                        type='file'
+                        name='imgs'
+                        label='Images'
+                        multible
+                        onChange={handleDataChange}
+                      />
+                      <div className='flex gap-3 items-center flex-wrap py-2'>
+                        {imgs &&
+                          //@ts-ignore
+                          imgs.map((item, index) => (
+                            <img
+                              key={index}
+                              className='object-cover w-[200px] h-[150px] rounded-md'
+                              src={item}
+                              alt='Avatar priview'
+                            />
+                          ))}
+                      </div>
                       <textarea
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}

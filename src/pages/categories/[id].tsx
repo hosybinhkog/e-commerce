@@ -30,7 +30,11 @@ const ProductByCategories: NextPage = () => {
     dispatch(getDetails(router.query.id));
     // @ts-ignore
     dispatch(getProduct(router.query.keyword, currentPage, router.query.id));
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }, [dispatch, currentPage]);
 
   return (

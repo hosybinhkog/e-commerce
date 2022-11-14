@@ -25,8 +25,6 @@ const ProductsManage: NextPage = () => {
   );
   const router = useRouter();
 
-  console.log(products);
-
   const deleteProductHandler = (id: string) => {
     // @ts-ignore
     dispatch(deleteProduct(id));
