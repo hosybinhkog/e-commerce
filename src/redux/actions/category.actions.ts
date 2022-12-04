@@ -9,6 +9,9 @@ import {
   CATEGORY_DETAIL_REQUESTS,
   CATEGORY_DETAIL_SUCCESS,
   CATEGORY_DETAIL_FAILURE,
+  UPDATE_CATEGORY_REQUEST,
+  UPDATE_CATEGORY_FAIL,
+  UPDATE_CATEGORY_SUCCESS,
 } from "@/constants/redux.contants";
 
 export const createCategory = (categoryData) => async (dispatch) => {
@@ -65,6 +68,24 @@ export const getDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CATEGORY_DETAIL_FAILURE,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateCategoryDetails = (id, dataForm) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_CATEGORY_REQUEST });
+
+    const { data } = await clientAxios.put(`api/v1/category/${id}`, dataForm);
+
+    dispatch({
+      type: UPDATE_CATEGORY_SUCCESS,
+      payload: data.category,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_CATEGORY_FAIL,
       payload: error.response.data.message,
     });
   }

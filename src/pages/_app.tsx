@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         <Transition location={router.pathname}>
           <Provider store={store}>
             <SessionProvider session={session}>
-              <Toaster />
+              <Toaster position='top-center' toastOptions={{ duration: 500 }} />
               <Component {...pageProps} />
             </SessionProvider>
           </Provider>

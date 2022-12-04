@@ -8,7 +8,9 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  const { isAuthenticated, loading } = useAppSelector((state) => state.user);
+  const { isAuthenticated, loading, user } = useAppSelector(
+    (state) => state.user
+  );
 
   const router = useRouter();
 
@@ -16,7 +18,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     if (!isAuthenticated) {
       router.push("/login");
     }
-  }, [router, isAuthenticated]);
+  }, [isAuthenticated]);
 
   return (
     <>{loading === true ? <Loading /> : <>{isAuthenticated && children}</>}</>

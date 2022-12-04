@@ -131,9 +131,32 @@ const Categies: NextPage = () => {
                                 <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
                                   <button
                                     type='button'
-                                    className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700'
+                                    className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 disabled:opacity-50'
+                                    disabled
                                   >
                                     Delete
+                                  </button>
+                                  <button
+                                    onClick={() =>
+                                      router.push(
+                                        `/dashboard/category/update/${item?._id}`
+                                      )
+                                    }
+                                    type='button'
+                                    className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700'
+                                  >
+                                    Edit
+                                  </button>
+                                  <button
+                                    onClick={() =>
+                                      router.push(
+                                        `/dashboard/category/${item?._id}`
+                                      )
+                                    }
+                                    type='button'
+                                    className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700'
+                                  >
+                                    views
                                   </button>
                                 </td>
                               </tr>
@@ -147,7 +170,6 @@ const Categies: NextPage = () => {
                         pageSize={sizePage}
                         total={categories.length}
                       />
-                      ;
                     </div>
                   </div>
                 </div>

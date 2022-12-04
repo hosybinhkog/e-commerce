@@ -10,6 +10,11 @@ import {
   CATEGORY_DETAIL_REQUESTS,
   CATEGORY_DETAIL_SUCCESS,
   CATEGORY_DETAIL_FAILURE,
+  UPDATE_CATEGORY_REQUEST,
+  UPDATE_CATEGORY_SUCCESS,
+  UPDATE_CATEGORY_FAIL,
+  UPDATE_CATEGORY_RESET,
+  CLEAR_ERRROR_UPDATE_CATEGORY,
 } from "@/constants/redux.contants";
 
 export const createCategoryReducer = (state: any = {}, action) => {
@@ -109,5 +114,45 @@ export const categoryDetailsReducer = (
       return {
         ...state,
       };
+  }
+};
+
+export const updateCategoryDetails = (
+  state: any = { category: {} },
+  action
+) => {
+  switch (action.type) {
+    case UPDATE_CATEGORY_REQUEST:
+      return {
+        loading: true,
+        error: undefined,
+        category: undefined,
+      };
+    case UPDATE_CATEGORY_SUCCESS:
+      return {
+        loading: false,
+        error: undefined,
+        category: action.payload,
+        success: true,
+      };
+    case UPDATE_CATEGORY_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case UPDATE_CATEGORY_RESET:
+      return {
+        ...state,
+        success: undefined,
+      };
+
+    case CLEAR_ERRROR_UPDATE_CATEGORY:
+      return {
+        ...state,
+        error: undefined,
+      };
+    default: {
+      return { ...state };
+    }
   }
 };

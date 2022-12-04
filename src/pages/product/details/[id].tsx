@@ -50,6 +50,11 @@ const ProductDetail: NextPage = () => {
     formData.set("comment", comment);
     formData.set("productId", router.query.id as string);
 
+    // @ts-ignore
+    imgs.forEach((image) => {
+      formData.append("imgs", image);
+    });
+
     //@ts-ignore
     dispatch(newReview(formData));
     setComment("");
@@ -76,6 +81,7 @@ const ProductDetail: NextPage = () => {
   const handleAddToCart = () => {
     // @ts-ignore
     dispatch(addItemsToCart(router.query.id, quanlity));
+    setImgs([]);
     toast.success("Add cart successfully");
   };
 
@@ -105,6 +111,7 @@ const ProductDetail: NextPage = () => {
   useEffect(() => {
     if (success) {
       toast.success("Post comment success !");
+      setImgs([]);
       dispatch({ type: NEW_REVIEW_RESET });
     }
 

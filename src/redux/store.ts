@@ -52,6 +52,7 @@ const reducers = combineReducers({
   newProduct: productReducerAll.newProductReducer,
   categoryDetails: categoryReducer.categoryDetailsReducer,
   fetchOrders: orderReducer.fetchOdersReducer,
+  updateCategoryDetails: categoryReducer.updateCategoryDetails,
   fetchAdminCustomer: adminCustomer.fetchCustomerReducer,
 });
 

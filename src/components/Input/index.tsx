@@ -32,7 +32,7 @@ const Input: React.FC<InputProps> = ({
       <input
         value={value || ""}
         className={`${className} focus:outline-none focus:ring-[2px] focus:ring-yellow-300 rounded-[2px] border-[0.5px] border-gray-600 focus:border-hidden text-justify px-2 transition-all ease-out duration-150 text-[15px] text-gray-500`}
-        type={type}
+        type={type || "text"}
         name={name}
         id={name}
         onChange={onChange}

@@ -163,7 +163,7 @@ export const newProductReducer = (state: any = { product: {} }, action) => {
   }
 };
 
-export const productReducerSingle = (state, action) => {
+export const productReducerSingle = (state: any = {}, action) => {
   switch (action.type) {
     case DELETE_PRODUCT_REQUEST:
     case UPDATE_PRODUCT_REQUEST:
@@ -175,13 +175,13 @@ export const productReducerSingle = (state, action) => {
       return {
         ...state,
         loading: false,
-        isDeleted: action.payload,
+        isDeleted: true,
       };
     case UPDATE_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
-        isUpdate: action.payload,
+        isUpdate: true,
       };
     case DELETE_PRODUCT_FAIL:
     case UPDATE_PRODUCT_FAIL:
@@ -198,7 +198,7 @@ export const productReducerSingle = (state, action) => {
     case UPDATE_PRODUCT_RESET:
       return {
         ...state,
-        isUpdated: false,
+        isUpdate: false,
       };
     case CLEAR_ERRORS:
       return {

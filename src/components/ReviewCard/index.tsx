@@ -35,6 +35,18 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             {review?.username || "Nguyễn Xuân Thành"}
           </p>
           <ReactStars {...options} />
+          <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2'>
+            {review.imgs &&
+              //@ts-ignore
+              review.imgs.map((item, index) => (
+                <img
+                  key={index}
+                  className='object-cover w-[200px] h-[150px] rounded-md'
+                  src={item.url}
+                  alt='Avatar priview'
+                />
+              ))}
+          </div>
           <span className='text-base text-gray-500 max-w-2xl lg:max-w-full line-clamp-5'>
             {review?.comment ||
               "Hay qua pro ơi Hay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơiHay qua pro ơi"}

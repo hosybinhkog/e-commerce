@@ -69,4 +69,10 @@ export interface IReview {
   _id?: string;
   createdAt: string;
   updatedAt: string;
+  imgs?: Imgs[];
+}
+
+export interface Imgs {
+  public_id: string;
+  url: string;
 }

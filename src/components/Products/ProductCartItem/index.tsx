@@ -1,4 +1,3 @@
-import { useAppDispatch } from "@/hooks";
 import { IProductCartItem } from "@/interfaces";
 import { StarIcon } from "@heroicons/react/solid";
 import Link from "next/link";

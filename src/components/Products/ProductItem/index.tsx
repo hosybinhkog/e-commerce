@@ -52,7 +52,9 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, imageHeight }) => {
       </h4>
       <div className='flex items-center'>
         <Rate value={product.rating} disabled />
-        {product.rating === 0 ? "0 rating" : `${product.rating} ratings`}
+        {product.rating === 0
+          ? "0 rating"
+          : `${product.rating.toFixed(1)} ratings`}
       </div>
       <p className='text-xs my-2 line-clamp-2'>
         {product.description ||

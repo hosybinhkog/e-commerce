@@ -6,14 +6,18 @@ import { fetchCustomers } from "@/redux/actions/admin.customer.actions";
 import { Pagination } from "antd";
 import moment from "moment";
 import { NextPage } from "next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const CustomersManage: NextPage = () => {
   const dispatch = useAppDispatch();
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const { error, loading, customers } = useAppSelector(
     (state) => state.fetchAdminCustomer
   );
+
+  const pageSize = 4;
+  const currentSize = currentPage === 1 ? 0 : (currentPage - 1) * pageSize;
 
   useEffect(() => {
     if (error) {
@@ -101,47 +105,61 @@ const CustomersManage: NextPage = () => {
                       </thead>
                       <tbody>
                         {customers?.length &&
-                          customers?.map((item, index) => (
-                            <tr key={item._id} className='border-b rounded-md'>
-                              <td className='px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>
-                                {index + 1}
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold whitespace-nowrap'>
-                                <img
-                                  className='h-14 w-14'
-                                  src={item!.avatar!.url}
-                                  alt=''
-                                />
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap max-w-[100px] truncate'>
-                                {item?.username}
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap max-w-[100px] truncate'>
-                                {item?.email}
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
-                                {item?.role}
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
-                                {item.isGoogle ? "Google" : "My website"}
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
-                                {moment(item?.createdAt).format("MMMM Do YYYY")}
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
-                                <button
-                                  type='button'
-                                  className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700'
-                                >
-                                  Views
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
+                          customers
+                            ?.slice(currentSize, currentSize + pageSize)
+                            .map((item, index) => (
+                              <tr
+                                key={item._id}
+                                className='border-b rounded-md'
+                              >
+                                <td className='px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>
+                                  {index + 1}
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold whitespace-nowrap'>
+                                  <img
+                                    className='h-14 w-14'
+                                    src={item!.avatar!.url}
+                                    alt=''
+                                  />
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap max-w-[100px] truncate'>
+                                  {item?.username}
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap max-w-[100px] truncate'>
+                                  {item?.email}
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
+                                  {item?.role}
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
+                                  {item.isGoogle ? "Google" : "My website"}
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
+                                  {moment(item?.createdAt).format(
+                                    "MMMM Do YYYY"
+                                  )}
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
+                                  <button
+                                    type='button'
+                                    className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700'
+                                  >
+                                    Views
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
                       </tbody>
                     </table>
                     <div className=' py-2 flex items-center justify-center'>
-                      <Pagination defaultCurrent={1} total={50} />;
+                      <Pagination
+                        size='default'
+                        current={currentSize}
+                        pageSize={pageSize}
+                        responsive
+                        onChange={(e) => setCurrentPage(e)}
+                        total={customers?.length || 10}
+                      />
                     </div>
                   </div>
                 </div>

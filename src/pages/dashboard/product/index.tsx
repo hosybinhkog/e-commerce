@@ -9,7 +9,7 @@ import {
 } from "@/redux/actions/product.actions";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Currency from "react-currency-formatter";
 import moment from "moment";
@@ -23,12 +23,19 @@ const ProductsManage: NextPage = () => {
   const { error: deleteError, isDeleted } = useAppSelector(
     (state) => state.product
   );
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const router = useRouter();
 
-  const deleteProductHandler = (id: string) => {
+  const deleteProductHandler = async (id: string) => {
+    const idLoading = toast.loading("Deleting.......");
     // @ts-ignore
-    dispatch(deleteProduct(id));
+    await dispatch(deleteProduct(id));
+
+    toast.success("Delete successfully", { id: idLoading });
   };
+
+  const pageSize = 4;
+  const currentSize = currentPage === 1 ? 0 : (currentPage - 1) * pageSize;
 
   useEffect(() => {
     if (error) {
@@ -127,50 +134,89 @@ const ProductsManage: NextPage = () => {
                       </thead>
                       <tbody>
                         {products?.length &&
-                          products?.map((item, index) => (
-                            <tr key={item._id} className='border-b rounded-md'>
-                              <td className='px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>
-                                {index + 1}
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold whitespace-nowrap'>
-                                <img
-                                  className='h-14 w-14'
-                                  src={item!.imgs[0]!.url}
-                                  alt=''
-                                />
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap max-w-[100px] truncate'>
-                                {item?.name}
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap max-w-[100px] truncate'>
-                                {item?.description}
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
-                                <Currency
-                                  quantity={item?.price || 0}
-                                  currency='GBP'
-                                />
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
-                                {item.Stock}
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
-                                {moment(item?.createdAt).format("MMMM Do YYYY")}
-                              </td>
-                              <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
-                                <button
-                                  type='button'
-                                  className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700'
-                                >
-                                  Delete
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
+                          products
+                            ?.slice(currentSize, currentSize + pageSize)
+                            .map((item, index) => (
+                              <tr
+                                key={item._id}
+                                className='border-b rounded-md'
+                              >
+                                <td className='px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>
+                                  {index + 1}
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold whitespace-nowrap'>
+                                  <img
+                                    className='h-14 w-14'
+                                    src={item!.imgs[0]!.url}
+                                    alt=''
+                                  />
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap max-w-[100px] truncate'>
+                                  {item?.name}
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap max-w-[100px] truncate'>
+                                  {item?.description}
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
+                                  <Currency
+                                    quantity={item?.price || 0}
+                                    currency='GBP'
+                                  />
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
+                                  {item.Stock}
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
+                                  {moment(item?.createdAt).format(
+                                    "MMMM Do YYYY"
+                                  )}
+                                </td>
+                                <td className='text-md text-gray-900 font-semibold px-6 py-4 whitespace-nowrap'>
+                                  <button
+                                    type='button'
+                                    onClick={() =>
+                                      deleteProductHandler(item?._id)
+                                    }
+                                    className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 disabled:opacity-60'
+                                  >
+                                    Delete
+                                  </button>
+                                  <button
+                                    onClick={() =>
+                                      router.push(
+                                        `/dashboard/product/update/${item?._id}`
+                                      )
+                                    }
+                                    type='button'
+                                    className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700'
+                                  >
+                                    Edit
+                                  </button>
+                                  <button
+                                    type='button'
+                                    onClick={() =>
+                                      router.push(
+                                        `/dashboard/product/view/${item?._id}`
+                                      )
+                                    }
+                                    className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700'
+                                  >
+                                    View
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
                       </tbody>
                     </table>
                     <div className=' py-2 flex items-center justify-center'>
-                      <Pagination defaultCurrent={1} total={50} />;
+                      <Pagination
+                        size='default'
+                        current={currentSize}
+                        pageSize={pageSize}
+                        responsive
+                        onChange={(e) => setCurrentPage(e)}
+                        total={products?.length || 10}
+                      />
                     </div>
                   </div>
                 </div>

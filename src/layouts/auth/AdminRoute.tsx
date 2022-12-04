@@ -19,7 +19,7 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
     if (!isAuthenticated || user?.role !== "admin") {
       router.push("/admin/login");
     }
-  }, [router, isAuthenticated, user]);
+  }, [isAuthenticated, user]);
 
   return (
     <>{loading === true ? <Loading /> : <>{isAuthenticated && children}</>}</>
