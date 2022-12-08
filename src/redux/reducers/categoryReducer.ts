@@ -3,7 +3,7 @@ import {
   NEW_CATEGORY_SUCCESS,
   NEW_CATEGORY_RESET,
   NEW_CATEGORY_FAIL,
-  CLEAR_ERRORS,
+  CLEAR_ERRORS_CATEGORY,
   ALL_CATEGORY_REQUESTS,
   ALL_CATEGORY_SUCCESS,
   ALL_CATEGORY_FAILURE,
@@ -44,7 +44,7 @@ export const createCategoryReducer = (state: any = {}, action) => {
         error: action.payload,
         success: false,
       };
-    case CLEAR_ERRORS:
+    case CLEAR_ERRORS_CATEGORY:
       return {
         ...state,
         error: null,
@@ -75,7 +75,7 @@ export const getAllCategory = (state: any = { categories: [] }, action) => {
         success: false,
         ...state,
       };
-    case CLEAR_ERRORS:
+    case CLEAR_ERRORS_CATEGORY:
       return {
         ...state,
         error: null,
@@ -92,11 +92,13 @@ export const categoryDetailsReducer = (
   switch (action.type) {
     case CATEGORY_DETAIL_REQUESTS:
       return {
+        error: null,
         loading: true,
         ...state,
       };
     case CATEGORY_DETAIL_SUCCESS:
       return {
+        error: null,
         loading: false,
         category: action.payload,
       };
@@ -105,10 +107,10 @@ export const categoryDetailsReducer = (
         loading: false,
         error: action.payload,
       };
-    case CLEAR_ERRORS:
+    case CLEAR_ERRORS_CATEGORY:
       return {
-        ...state,
         error: null,
+        ...state,
       };
     default:
       return {
@@ -125,13 +127,13 @@ export const updateCategoryDetails = (
     case UPDATE_CATEGORY_REQUEST:
       return {
         loading: true,
-        error: undefined,
-        category: undefined,
+        error: null,
+        category: null,
       };
     case UPDATE_CATEGORY_SUCCESS:
       return {
         loading: false,
-        error: undefined,
+        error: null,
         category: action.payload,
         success: true,
       };
@@ -143,13 +145,13 @@ export const updateCategoryDetails = (
     case UPDATE_CATEGORY_RESET:
       return {
         ...state,
-        success: undefined,
+        success: null,
       };
 
     case CLEAR_ERRROR_UPDATE_CATEGORY:
       return {
         ...state,
-        error: undefined,
+        error: null,
       };
     default: {
       return { ...state };

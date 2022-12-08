@@ -1,4 +1,5 @@
 import clientAxios from "@/apis";
+import { createLoggerHistory } from "@/apis/mothod";
 import {
   CLEAR_ERRORS,
   LOAD_USER_FAIL,
@@ -49,8 +50,11 @@ export const login = (email: string, password: string) => async (dispatch) => {
 
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
   } catch (error) {
-    console.log(error);
-    dispatch({ type: LOGIN_FAILURE, payload: error.response.data.message });
+    createLoggerHistory(error?.response?.data?.message || "Error server");
+    dispatch({
+      type: LOGIN_FAILURE,
+      payload: error?.response?.data?.message || "error server inteval",
+    });
   }
 };
 
@@ -66,9 +70,10 @@ export const register = (userData) => async (dispatch) => {
 
     dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: REGISTER_USER_FAILURE,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "error server inteval",
     });
   }
 };
@@ -81,7 +86,11 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error) {
-    dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
+    createLoggerHistory(error?.response?.data?.message || "Error server");
+    dispatch({
+      type: LOAD_USER_FAIL,
+      payload: error?.response?.data?.message || "error server inteval",
+    });
     dispatch({ type: CLEAR_ERRORS });
   }
 };
@@ -92,7 +101,11 @@ export const logout = () => async (dispatch) => {
 
     dispatch({ type: LOGOUT_SUCCESS });
   } catch (error) {
-    dispatch({ type: LOGOUT_FAILURE, payload: error.response.data.message });
+    createLoggerHistory(error?.response?.data?.message || "Error server");
+    dispatch({
+      type: LOGOUT_FAILURE,
+      payload: error?.response?.data?.message || "error server inteval",
+    });
   }
 };
 
@@ -104,9 +117,10 @@ export const updateProfile = (userData) => async (dispatch) => {
 
     dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.success });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: UPDATE_PROFILE_FAILURE,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "error server inteval",
     });
   }
 };
@@ -122,9 +136,10 @@ export const updatePassword = (password) => async (dispatch) => {
 
     dispatch({ type: UPDATE_PASSWORD_SUCCESS, payload: data.success });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: UPDATE_PASSWORD_FAILURE,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "error server inteval",
     });
   }
 };
@@ -138,9 +153,10 @@ export const forgotPassword = (email) => async (dispatch) => {
     });
     dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload: data.message });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: FORGOT_PASSWORD_FAILURE,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "error server inteval",
     });
   }
 };
@@ -156,9 +172,10 @@ export const resetPassword = (token, password) => async (dispatch) => {
 
     dispatch({ type: RESET_PASSWORD_SUCCESS, payload: data.success });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: RESET_PASSWORD_FAILURE,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "error server inteval",
     });
   }
 };

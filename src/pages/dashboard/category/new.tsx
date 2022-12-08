@@ -1,4 +1,5 @@
 import { InputAdmin } from "@/components";
+import { UPDATE_CATEGORY_RESET } from "@/constants/redux.contants";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import Layout from "@/layouts/admin/Layout";
 import { createCategory } from "@/redux/actions/category.actions";
@@ -21,12 +22,13 @@ const newCategory: NextPage = () => {
   const handleFormSubmitNewProduct = (e) => {
     e.preventDefault();
 
+    const id = toast.loading("Create category....");
+
     const formData = new FormData();
 
     formData.set("name", name);
     formData.set("description", description);
 
-    const id = toast.loading("Create category....");
     // @ts-ignore
 
     formData.append("images", images);
@@ -58,6 +60,8 @@ const newCategory: NextPage = () => {
   useEffect(() => {
     if (success) {
       toast.success("Create category success !!");
+      // @ts-ignore
+      dispatch({ type: UPDATE_CATEGORY_RESET });
       router.push("/dashboard/category");
     }
 

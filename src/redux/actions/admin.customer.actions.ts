@@ -1,4 +1,5 @@
 import clientAxios from "@/apis";
+import { createLoggerHistory } from "@/apis/mothod";
 import {
   FETCH_CUSTOMER_FAILURE,
   FETCH_CUSTOMER_REQUEST,
@@ -18,9 +19,10 @@ export const fetchCustomers = () => async (dispatch) => {
 
     dispatch({ type: FETCH_CUSTOMER_SUCCESS, payload: data.users });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: FETCH_CUSTOMER_FAILURE,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };

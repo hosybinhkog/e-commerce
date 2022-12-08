@@ -15,6 +15,7 @@ export const CATEGORY_DETAIL_SUCCESS = "CATEGORY_details_success";
 export const CATEGORY_DETAIL_FAILURE = "CATEGORY_details_failure";
 
 export const CLEAR_ERRORS = "clear_errors";
+export const CLEAR_ERRORS_CATEGORY = "clear_errors_category";
 
 export const LOGIN_REQUEST = "login_request";
 export const LOGIN_SUCCESS = "login_success";

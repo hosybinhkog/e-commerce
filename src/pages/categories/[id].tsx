@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { Loading, ProductItem } from "@/components";
+import { CLEAR_ERRORS_CATEGORY } from "@/constants/redux.contants";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import LayoutMain from "@/layouts/commom/LayoutMain";
+import { getDetails } from "@/redux/actions/category.actions";
 import { getProduct } from "@/redux/actions/product.actions";
+import { Pagination } from "antd";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { Feed, Loading, ProductItem } from "@/components";
-import { getDetails } from "@/redux/actions/category.actions";
-import { Pagination } from "antd";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const ProductByCategories: NextPage = () => {
   const {
@@ -16,9 +18,11 @@ const ProductByCategories: NextPage = () => {
     resultPerPage,
     filteredProductsCount,
   } = useAppSelector((state) => state.products);
-  const { loading: loadingCategories, category } = useAppSelector(
-    (state) => state.categoryDetails
-  );
+  const {
+    loading: loadingCategories,
+    category,
+    error,
+  } = useAppSelector((state) => state.categoryDetails);
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -28,6 +32,14 @@ const ProductByCategories: NextPage = () => {
   useEffect(() => {
     //@ts-ignore
     dispatch(getDetails(router.query.id));
+
+    if (error) {
+      toast.error(error);
+      //@ts-ignore
+      dispatch({ type: CLEAR_ERRORS_CATEGORY });
+      router.push("/");
+    }
+
     // @ts-ignore
     dispatch(getProduct(router.query.keyword, currentPage, router.query.id));
     window.scrollTo({
@@ -35,7 +47,7 @@ const ProductByCategories: NextPage = () => {
       left: 0,
       behavior: "smooth",
     });
-  }, [dispatch, currentPage]);
+  }, [dispatch, currentPage, router.query.id, error]);
 
   return (
     <>
@@ -45,19 +57,21 @@ const ProductByCategories: NextPage = () => {
         <LayoutMain>
           <div className='px-5 py-5'>
             <h5 className='text-gray-900 font-extrabold md:text-3xl text-xl mb-2'>
-              {category.name}
+              {category?.name}
             </h5>
-            <p className='text-gray-500 text-xs mb-4'>{category.description}</p>
+            <p className='text-gray-500 text-xs mb-4'>
+              {category?.description}
+            </p>
             <div className='border rounded-lg py-2 px-4 border-gray-500 text-sm'>
               <p>
                 {filteredProductsCount} products for{" "}
                 <span className='text-xs text-red-500 font-semibold cursor-pointer'>
-                  {category.name}
+                  {category?.name}
                 </span>
               </p>
             </div>
             <div className='grid-flow-row-dense grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-              {products.map((product) => (
+              {products?.map((product) => (
                 <ProductItem key={product._id} imageHeight product={product} />
               ))}
             </div>

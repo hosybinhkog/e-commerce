@@ -1,4 +1,5 @@
 import clientAxios from "@/apis";
+import { createLoggerHistory } from "@/apis/mothod";
 import {
   ADMIN_PRODUCT_FAIL,
   ADMIN_PRODUCT_REQUEST,
@@ -45,9 +46,10 @@ export const getProduct =
         payload: data,
       });
     } catch (error) {
+      createLoggerHistory(error?.response?.data?.message || "Error server");
       dispatch({
         type: ALL_PRODUCT_FAILURE,
-        payload: error.response.data.message,
+        payload: error?.response?.data?.message || "Error server interval",
       });
     }
   };
@@ -71,9 +73,10 @@ export const getDetails = (id) => async (dispatch) => {
       payload: data.product,
     });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: ALL_DETAIL_FAILURE,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "Error server interval",
     });
   }
 };
@@ -94,6 +97,7 @@ export const newReview = (reviewData) => async (dispatch) => {
 
     dispatch({ type: NEW_REVIEW_SUCCESS, payload: data.success });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({ type: NEW_REVIEW_FAIL, payload: error.response.data.error });
   }
 };
@@ -111,9 +115,10 @@ export const getAdminProducts = () => async (dispatch) => {
 
     dispatch({ type: ADMIN_PRODUCT_SUCCESS, payload: data.products });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: ADMIN_PRODUCT_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "Error server interval",
     });
   }
 };
@@ -135,7 +140,11 @@ export const createProduct = (productData) => async (dispatch) => {
 
     dispatch({ type: NEW_PRODUCT_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: NEW_PRODUCT_FAIL, payload: error.response.data.message });
+    createLoggerHistory(error?.response?.data?.message || "Error server");
+    dispatch({
+      type: NEW_PRODUCT_FAIL,
+      payload: error?.response?.data?.message || "Error server interval",
+    });
   }
 };
 
@@ -156,7 +165,11 @@ export const createProductResell = (productData) => async (dispatch) => {
 
     dispatch({ type: NEW_PRODUCT_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: NEW_PRODUCT_FAIL, payload: error.response.data.message });
+    createLoggerHistory(error?.response?.data?.message || "Error server");
+    dispatch({
+      type: NEW_PRODUCT_FAIL,
+      payload: error?.response?.data?.message || "Error server interval",
+    });
   }
 };
 
@@ -176,9 +189,10 @@ export const deleteProduct = (id) => async (dispatch) => {
 
     dispatch({ type: DELETE_PRODUCT_SUCCESS, payload: data.success });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: DELETE_PRODUCT_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "Error server interval",
     });
   }
 };
@@ -200,9 +214,10 @@ export const updateProduct = (id, productData) => async (dispatch) => {
 
     dispatch({ type: UPDATE_PRODUCT_SUCCESS, payload: data.success });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: UPDATE_PRODUCT_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "Error server interval",
     });
   }
 };

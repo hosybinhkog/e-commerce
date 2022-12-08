@@ -1,4 +1,5 @@
 import clientAxios from "@/apis";
+import { createLoggerHistory } from "@/apis/mothod";
 import {
   NEW_CATEGORY_FAIL,
   NEW_CATEGORY_REQUEST,
@@ -31,7 +32,11 @@ export const createCategory = (categoryData) => async (dispatch) => {
 
     dispatch({ type: NEW_CATEGORY_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: NEW_CATEGORY_FAIL, payload: error.response.data.message });
+    createLoggerHistory(error?.response?.data?.message || "Error server");
+    dispatch({
+      type: NEW_CATEGORY_FAIL,
+      payload: error?.response?.data?.message || "Error server interval",
+    });
   }
 };
 
@@ -48,9 +53,10 @@ export const getCategories = () => async (dispatch) => {
       payload: data.categories,
     });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: ALL_CATEGORY_FAILURE,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "Error server interval",
     });
   }
 };
@@ -66,9 +72,10 @@ export const getDetails = (id) => async (dispatch) => {
       payload: data.category,
     });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: CATEGORY_DETAIL_FAILURE,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "Error server interval",
     });
   }
 };
@@ -84,9 +91,10 @@ export const updateCategoryDetails = (id, dataForm) => async (dispatch) => {
       payload: data.category,
     });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: UPDATE_CATEGORY_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "Error server interval",
     });
   }
 };

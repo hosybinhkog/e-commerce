@@ -13,14 +13,14 @@ const CategoryFeedItem: React.FC<CategoryFeedItemProps> = ({ category }) => {
     router.push(`/categories/${category._id}`);
 
   return (
-    <div>
-      <div className='relative flex flex-col m-5 bg-white  z-30 p-10 rounded-md'>
+    <div className=''>
+      <div className='h-[500px] relative flex flex-col m-5 bg-white  z-30 p-10 rounded-md'>
         <p className='absolute top-2 right-2 text-xs italic text-gray-400'>
           One more category is the best
         </p>
         <h4
           onClick={handlePushCategoryPage}
-          className='cursor-pointer line-clamp-2 font-bold text-lg text-gray-900'
+          className='cursor-pointer h-[52px] line-clamp-2 font-bold text-lg text-gray-900'
         >
           {category.name}
         </h4>
@@ -30,7 +30,7 @@ const CategoryFeedItem: React.FC<CategoryFeedItemProps> = ({ category }) => {
             category.img.url ||
             "https://images-na.ssl-images-amazon.com/images/W/WEBP_402378-T2/images/G/01/AmazonExports/Fuji/2021/September/DashboardCards/Fuji_Desktop_Dash_Kindle_1x._SY304_CB639752818_.jpg"
           }
-          className='cursor-pointer w-full min-h-[300px] max-h-[350px] object-contain rounded-lg'
+          className='cursor-pointer w-full min-h-[250px] max-h-[350px] object-cover rounded-lg'
         />
 
         <p className='text-xs my-2 line-clamp-2'>{category.shortDescription}</p>

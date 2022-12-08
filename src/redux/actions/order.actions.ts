@@ -1,4 +1,5 @@
 import clientAxios from "@/apis";
+import { createLoggerHistory } from "@/apis/mothod";
 import {
   CLEAR_ERRORS,
   CREATE_ORDER_FAIL,
@@ -34,9 +35,10 @@ export const fetchOrders = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: ALL_ORDER_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "Error server interval",
     });
   }
 };
@@ -54,9 +56,10 @@ export const createOrder = (order) => async (dispatch, getState) => {
 
     dispatch({ type: CREATE_ORDER_SUCCESS, payload: data });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: CREATE_ORDER_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "Error server interval",
     });
   }
 };
@@ -77,9 +80,10 @@ export const myOrders = () => async (dispatch, getState) => {
 
     dispatch({ type: MY_ORDER_SUCCESS, payload: data.orders });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: MY_ORDER_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "Error server interval",
     });
   }
 };
@@ -96,9 +100,10 @@ export const getOrderDetails = (id) => async (dispatch) => {
 
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data.order });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: ORDER_DETAILS_FAIL,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "Error server interval",
     });
   }
 };
@@ -118,9 +123,10 @@ export const updateStatus = (id) => async (dispatch) => {
 
     dispatch({ type: UPDATE_STATUS_SUCCESS, payload: data.success });
   } catch (error) {
+    createLoggerHistory(error?.response?.data?.message || "Error server");
     dispatch({
       type: UPDATE_STATUS_FAILURE,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message || "Error server interval",
     });
   }
 };
